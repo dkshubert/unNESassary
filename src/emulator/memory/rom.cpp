@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "logger.h"
 #include "rom.h"
 
@@ -9,8 +11,13 @@ ROM::ROM(Logger& logger)
 {
 }
 
-void ROM::handleClockTick()
+void ROM::handleClockTick(std::uint64_t tickNum)
 {
+    _logger.write(
+        LogLevel::trace,
+        fmt::format("handling tickNum: {}", tickNum)
+    );
+
     // TODO
 }
 

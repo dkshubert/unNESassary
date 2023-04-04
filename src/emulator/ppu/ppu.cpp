@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "logger.h"
 #include "ppu.h"
 
@@ -9,8 +11,13 @@ PPU::PPU(Logger& logger)
 {
 }
 
-void PPU::handleClockTick()
+void PPU::handleClockTick(std::uint64_t tickNum)
 {
+    _logger.write(
+        LogLevel::trace,
+        fmt::format("handling tickNum: {}", tickNum)
+    );
+
     // TODO
 }
 

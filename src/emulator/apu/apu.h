@@ -15,7 +15,7 @@ public:
     APU(Logger& logger);
     ~APU() override = default;
 
-    void handleClockTick() override;
+    void handleClockTick(std::uint64_t tickNum) override;
 };
 
 } // unnes

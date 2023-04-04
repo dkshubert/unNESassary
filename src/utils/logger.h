@@ -21,7 +21,7 @@ enum class LogLevel
 class Logger
 {
 private:
-    LogLevel _level = LogLevel::all;
+    LogLevel _level = LogLevel::info;
 
 protected:
     Logger() = default;

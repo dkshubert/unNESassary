@@ -15,7 +15,7 @@ public:
     RAM(Logger& logger);
     ~RAM() override = default;
 
-    void handleClockTick() override;
+    void handleClockTick(std::uint64_t tickNum) override;
 
 };
 

@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "logger.h"
 #include "ram.h"
 
@@ -9,8 +11,13 @@ RAM::RAM(Logger& logger)
 {
 }
 
-void RAM::handleClockTick()
+void RAM::handleClockTick(std::uint64_t tickNum)
 {
+    _logger.write(
+        LogLevel::trace,
+        fmt::format("handling tickNum: {}", tickNum)
+    );
+
     // TODO
 }
 

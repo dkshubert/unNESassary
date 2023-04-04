@@ -13,7 +13,7 @@ public:
     CPU(Logger& logger);
     ~CPU() override = default;
 
-    void handleClockTick() override;
+    void handleClockTick(std::uint64_t tickNum) override;
 
 };
 

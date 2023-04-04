@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "cpu.h"
 #include "logger.h"
 
@@ -9,8 +11,13 @@ CPU::CPU(Logger& logger)
 {
 }
 
-void CPU::handleClockTick()
+void CPU::handleClockTick(std::uint64_t tickNum)
 {
+    _logger.write(
+        LogLevel::trace,
+        fmt::format("handling tickNum: {}", tickNum)
+    );
+
     // TODO
 }
 
