@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "emulator/nes.h"
+#include "nes.h"
 
 static void error_callback(int /* error */ , const char* /* description */)
 {
@@ -25,7 +25,6 @@ static void key_callback(GLFWwindow* window,
 int main()
 {
     unnes::NES nes;
-    (void) nes;
 
     // TODO : actually run the NES
 
@@ -49,23 +48,18 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        const double time = glfwGetTime();
+        nes.run(time);
+
         double x {0};
         double y {0};
 
-        int width {0};
-        int height {0};
-
-        double t { glfwGetTime() };
-
         glfwGetCursorPos(window, &x, &y);
 
-        std::cout << "t: " << t
+        std::cout << "t: " << time
                   << ", x: " << x
                   << ", y: " << y
                   << std::endl;
-
-        // Get window size (may be different than the requested size)
-        glfwGetWindowSize(window, &width, &height);
 
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -87,5 +81,5 @@ int main()
     glfwDestroyWindow(window);
     glfwTerminate();
 
-    return -1;
+    return 0;
 }
