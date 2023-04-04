@@ -5,11 +5,14 @@
 namespace unnes
 {
 
+class Logger;
+
 class PPU : public IClockedDevice
 {
+    Logger& _logger;
 
 public:
-    PPU() = default;
+    PPU(Logger& logger);
     ~PPU() override = default;
 
     void handleClockTick() override;

@@ -7,9 +7,10 @@ namespace unnes
 
 class CPU : public IClockedDevice
 {
+    Logger& _logger;
 
 public:
-    CPU() = default;
+    CPU(Logger& logger);
     ~CPU() override = default;
 
     void handleClockTick() override;

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "nes.h"
+#include "stdoutlogger.h"
 
 static void error_callback(int /* error */ , const char* /* description */)
 {
@@ -24,18 +25,16 @@ static void key_callback(GLFWwindow* window,
 
 int main()
 {
-    unnes::NES nes;
+    unnes::StdOutLogger logger;
+    unnes::NES nes(logger);
 
-    // TODO : actually run the NES
-
-    GLFWwindow* window;
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
     {
         return -1;
     }
 
-    window = glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr);
+    GLFWwindow* window { glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr) };
     if (!window)
     {
         glfwTerminate();
@@ -44,22 +43,15 @@ int main()
 
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, key_callback);
-    glfwSwapInterval(1);
 
     while (!glfwWindowShouldClose(window))
     {
-        const double time = glfwGetTime();
+        const double time { glfwGetTime() };
         nes.run(time);
 
         double x {0};
         double y {0};
-
         glfwGetCursorPos(window, &x, &y);
-
-        std::cout << "t: " << time
-                  << ", x: " << x
-                  << ", y: " << y
-                  << std::endl;
 
         glClear(GL_COLOR_BUFFER_BIT);
 

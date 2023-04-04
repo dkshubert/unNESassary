@@ -1,11 +1,12 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 project(unNESassary)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(OpenGL REQUIRED)
+find_package(fmt REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
 
 add_executable(
     ${PROJECT_NAME}
@@ -17,6 +18,8 @@ add_executable(
     src/emulator/memory/rom.cpp
     src/emulator/nes.cpp
     src/emulator/ppu/ppu.cpp
+    src/utils/logger.cxx
+    src/utils/stdoutlogger.cpp
 )
 
 target_include_directories(
@@ -27,6 +30,7 @@ target_include_directories(
     src/emulator/cpu
     src/emulator/memory
     src/emulator/ppu
+    src/utils
 )
 
 target_compile_options(
@@ -38,6 +42,7 @@ target_compile_options(
 
 target_link_libraries(
     ${PROJECT_NAME} PRIVATE
+    fmt::fmt
     glfw
     OpenGL::OpenGL
     OpenGL::GLU
