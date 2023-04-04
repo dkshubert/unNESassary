@@ -18,6 +18,7 @@ add_executable(
     src/emulator/nes/memory/rom.cpp
     src/emulator/nes/nes.cpp
     src/emulator/nes/ppu/ppu.cpp
+    src/emulator/tv/tv.cpp
     src/utils/logger.cxx
     src/utils/stdoutlogger.cpp
 )
@@ -32,6 +33,7 @@ target_include_directories(
     src/emulator/nes/cpu
     src/emulator/nes/memory
     src/emulator/nes/ppu
+    src/emulator/tv
     src/utils
 )
 
