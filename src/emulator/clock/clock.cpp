@@ -1,36 +1,27 @@
+#include "clock.h"
+
 #include <cstdint>
 
-#include "clock.h"
 #include "logger.h"
 
-namespace unnes
-{
+namespace unnes {
 
-Clock::Clock(Logger& logger)
-    : _logger(logger)
-{
-}
+Clock::Clock(Logger& logger) : _logger(logger) {}
 
-void Clock::connect(const std::vector<IClockedDevice*>& devices)
-{
+void Clock::connect(const std::vector<IClockedDevice*>& devices) {
     _connectedDevices.insert(_connectedDevices.end(), devices.begin(), devices.end());
 }
 
-std::uint64_t Clock::tick()
-{
+std::uint64_t Clock::tick() {
     _totalTicks++;
 
-    for (auto& device : _connectedDevices)
-    {
+    for (auto& device : _connectedDevices) {
         device->handleClockTick(_totalTicks);
     }
 
     return _totalTicks;
 }
 
-std::uint32_t Clock::getSpeedHz() const
-{
-    return _speedHz;
-}
+std::uint32_t Clock::getSpeedHz() const { return _speedHz; }
 
-} // unnes
+}  // namespace unnes

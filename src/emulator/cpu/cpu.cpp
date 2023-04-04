@@ -1,24 +1,17 @@
+#include "cpu.h"
+
 #include <fmt/core.h>
 
-#include "cpu.h"
 #include "logger.h"
 
-namespace unnes
-{
+namespace unnes {
 
-CPU::CPU(Logger& logger)
-    : _logger(logger)
-{
-}
+CPU::CPU(Logger& logger) : _logger(logger) {}
 
-void CPU::handleClockTick(std::uint64_t tickNum)
-{
-    _logger.write(
-        LogLevel::trace,
-        fmt::format("handling tickNum: {}", tickNum)
-    );
+void CPU::handleClockTick(std::uint64_t tickNum) {
+    _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
     // TODO
 }
 
-} // unnes
+}  // namespace unnes

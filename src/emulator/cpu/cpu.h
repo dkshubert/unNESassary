@@ -2,19 +2,16 @@
 
 #include "clock.h"
 
-namespace unnes
-{
+namespace unnes {
 
-class CPU : public IClockedDevice
-{
+class CPU : public IClockedDevice {
     Logger& _logger;
 
-public:
+   public:
     CPU(Logger& logger);
     ~CPU() override = default;
 
     void handleClockTick(std::uint64_t tickNum) override;
-
 };
 
-} // unnes
+}  // namespace unnes

@@ -5,5 +5,5 @@ Yet another NES emulator.
 
 - CMake
 - conan
-- libglu1-mesa-dev
+- clang-format
 
