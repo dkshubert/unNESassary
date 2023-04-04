@@ -1,23 +1,29 @@
 #pragma once
 
-#include "apu/apu.h"
-#include "cpu/cpu.h"
-#include "ppu/ppu.h"
-#include "memory/ram.h"
-#include "memory/rom.h"
+#include "apu.h"
+#include "clock.h"
+#include "cpu.h"
+#include "ppu.h"
+#include "ram.h"
+#include "rom.h"
 
 namespace unnes
 {
 
 class NES
 {
-    CPU _cpu;
-    PPU _ppu;
-    APU _apu;
-    RAM _ram;
-    ROM _rom;
+    double _previousTime { 0 };
+    Clock _clock {};
+    CPU _cpu {};
+    PPU _ppu {};
+    APU _apu {};
+    RAM _ram {};
+    ROM _rom {};
 
 public:
+    NES();
+
+    void run(double time);
 };
 
 } // namespace unnes
