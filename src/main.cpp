@@ -6,37 +6,28 @@
 #include "nes.h"
 #include "stdoutlogger.h"
 
-static void error_callback(int /* error */ , const char* /* description */)
-{
+static void error_callback(int /* error */, const char* /* description */) {
     // TODO
 }
 
-static void key_callback(GLFWwindow* window,
-                         int key,
-                         int /* scancode */,
-                         int action,
-                         int /* mods */)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    {
+static void key_callback(GLFWwindow* window, int key, int /* scancode */, int action,
+                         int /* mods */) {
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
 }
 
-int main()
-{
+int main() {
     unnes::StdOutLogger logger;
     unnes::NES nes(logger);
 
     glfwSetErrorCallback(error_callback);
-    if (!glfwInit())
-    {
+    if (!glfwInit()) {
         return -1;
     }
 
-    GLFWwindow* window { glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr) };
-    if (!window)
-    {
+    GLFWwindow* window{glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr)};
+    if (!window) {
         glfwTerminate();
         return -1;
     }
@@ -44,13 +35,12 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, key_callback);
 
-    while (!glfwWindowShouldClose(window))
-    {
-        const double time { glfwGetTime() };
+    while (!glfwWindowShouldClose(window)) {
+        const double time{glfwGetTime()};
         nes.run(time);
 
-        double x {0};
-        double y {0};
+        double x{0};
+        double y{0};
         glfwGetCursorPos(window, &x, &y);
 
         glClear(GL_COLOR_BUFFER_BIT);
