@@ -4,6 +4,6 @@
 
 namespace unnes {
 
-double getTime() { return glfwGetTime(); }
+double getTime();
 
 }  // namespace unnes
