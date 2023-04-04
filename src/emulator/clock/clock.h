@@ -23,6 +23,7 @@ struct IClockedDevice {
     virtual void handleClockTick(std::uint64_t tickNum) = 0;
 };
 
+/// @brief Represents the system clock.
 class Clock {
     /// @note _speedHz isn't const because we want to be able to adjust the speed of emulation
     /// dynamically, based on the user's application settings.

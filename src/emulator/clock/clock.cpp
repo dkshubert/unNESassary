@@ -13,13 +13,11 @@ void Clock::connect(const std::vector<IClockedDevice*>& devices) {
 }
 
 std::uint64_t Clock::tick() {
-    _totalTicks++;
-
     for (auto& device : _connectedDevices) {
         device->handleClockTick(_totalTicks);
     }
 
-    return _totalTicks;
+    return _totalTicks++;
 }
 
 std::uint32_t Clock::getSpeedHz() const { return _speedHz; }
