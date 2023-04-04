@@ -2,21 +2,18 @@
 
 #include "clock.h"
 
-namespace unnes
-{
+namespace unnes {
 
 class Logger;
 
-class ROM : public IClockedDevice
-{
+class ROM : public IClockedDevice {
     Logger& _logger;
 
-public:
+   public:
     ROM(Logger& logger);
     ~ROM() override = default;
 
     void handleClockTick(std::uint64_t tickNum) override;
-
 };
 
-} // unnes
+}  // namespace unnes

@@ -1,23 +1,17 @@
+#include "apu.h"
+
 #include <fmt/core.h>
 
-#include "apu.h"
 #include "logger.h"
 
-namespace unnes
-{
+namespace unnes {
 
-APU::APU(Logger& logger) : _logger(logger)
-{
-}
+APU::APU(Logger& logger) : _logger(logger) {}
 
-void APU::handleClockTick(std::uint64_t tickNum)
-{
-    _logger.write(
-        LogLevel::trace,
-        fmt::format("handling tickNum: {}", tickNum)
-    );
+void APU::handleClockTick(std::uint64_t tickNum) {
+    _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
     // TODO
 }
 
-} // unnes
+}  // namespace unnes

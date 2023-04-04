@@ -2,18 +2,15 @@
 
 #include "logger.h"
 
-namespace unnes
-{
+namespace unnes {
 
-class StdOutLogger : public Logger
-{
-
-public:
+class StdOutLogger : public Logger {
+   public:
     StdOutLogger() = default;
     ~StdOutLogger() override = default;
 
-protected:
+   protected:
     void write(std::string_view message) const override;
 };
 
-} // namespace unnes
+}  // namespace unnes

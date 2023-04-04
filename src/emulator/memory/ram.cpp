@@ -1,24 +1,17 @@
+#include "ram.h"
+
 #include <fmt/core.h>
 
 #include "logger.h"
-#include "ram.h"
 
-namespace unnes
-{
+namespace unnes {
 
-RAM::RAM(Logger& logger)
-    : _logger(logger)
-{
-}
+RAM::RAM(Logger& logger) : _logger(logger) {}
 
-void RAM::handleClockTick(std::uint64_t tickNum)
-{
-    _logger.write(
-        LogLevel::trace,
-        fmt::format("handling tickNum: {}", tickNum)
-    );
+void RAM::handleClockTick(std::uint64_t tickNum) {
+    _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
     // TODO
 }
 
-} // unnes
+}  // namespace unnes
