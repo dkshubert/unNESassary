@@ -4,6 +4,7 @@
 
 #include <cstdint>
 
+#include "cart.h"
 #include "clock.h"
 #include "logger.h"
 
@@ -39,6 +40,10 @@ void NES::run(double time) {
     }
 
     _previousTime = time;
+}
+
+void NES::insertCart(const std::string_view romPath) {
+    _cart = std::make_unique<Cart>(_logger, romPath);
 }
 
 }  // namespace unnes

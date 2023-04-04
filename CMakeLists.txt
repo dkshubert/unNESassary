@@ -24,6 +24,7 @@ target_include_directories(
     ${PROJECT_NAME} PRIVATE
     src
     src/emulator
+    src/emulator/cart
     src/emulator/nes
     src/emulator/nes/apu
     src/emulator/nes/clock

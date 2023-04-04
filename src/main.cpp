@@ -6,6 +6,7 @@
 int main() {
     unnes::StdOutLogger logger;
     unnes::NES nes(logger);
+    nes.insertCart("testRom.nes");
     unnes::TV tv(logger);
 
     while (tv.isOn()) {
