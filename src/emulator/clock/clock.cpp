@@ -7,8 +7,7 @@ namespace unnes
 {
 
 Clock::Clock(Logger& logger)
-    : _connectedDevices()
-    , _logger(logger)
+    : _logger(logger)
 {
 }
 
@@ -19,14 +18,14 @@ void Clock::connect(const std::vector<IClockedDevice*>& devices)
 
 std::uint64_t Clock::tick()
 {
-    ++_cycleNum;
+    _totalTicks++;
 
     for (auto& device : _connectedDevices)
     {
-        device->handleClockTick();
+        device->handleClockTick(_totalTicks);
     }
 
-    return _cycleNum;
+    return _totalTicks;
 }
 
 std::uint32_t Clock::getSpeedHz() const

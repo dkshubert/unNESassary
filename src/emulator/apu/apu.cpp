@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "apu.h"
 #include "logger.h"
 
@@ -8,8 +10,13 @@ APU::APU(Logger& logger) : _logger(logger)
 {
 }
 
-void APU::handleClockTick()
+void APU::handleClockTick(std::uint64_t tickNum)
 {
+    _logger.write(
+        LogLevel::trace,
+        fmt::format("handling tickNum: {}", tickNum)
+    );
+
     // TODO
 }
 

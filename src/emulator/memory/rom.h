@@ -15,7 +15,7 @@ public:
     ROM(Logger& logger);
     ~ROM() override = default;
 
-    void handleClockTick() override;
+    void handleClockTick(std::uint64_t tickNum) override;
 
 };
 
