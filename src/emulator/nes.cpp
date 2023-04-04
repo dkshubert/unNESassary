@@ -25,12 +25,10 @@ NES::NES(Logger& logger)
 void NES::run(double time) {
     const double timeDelta{time - _previousTime};
 
-    // Note : some kind of narrowing conversion here is desired, though the
-    // rounding used here almost certainly results in less fidelitous clock
-    // timing, which means this approach for determining the # of cycles to
-    // execute since the last run might need to be revised when this project is
-    // further along. This will probably work reasonably well for the time
-    // being, though.
+    // Note : some kind of narrowing conversion here is desired, though the rounding used here
+    // almost certainly results in less fidelitous clock timing, which means this approach for
+    // determining the # of cycles to execute since the last run might need to be revised when this
+    // project is further along. This will probably work reasonably well for the time being, though.
     const std::uint32_t numCyclesToRun = _clock.getSpeedHz() * timeDelta;
 
     _logger.write(LogLevel::trace, fmt::format("time: {}, previous time: {}, num cycles to run: {}",
