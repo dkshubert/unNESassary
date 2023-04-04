@@ -5,11 +5,14 @@
 namespace unnes
 {
 
+class Logger;
+
 class ROM : public IClockedDevice
 {
+    Logger& _logger;
 
 public:
-    ROM() = default;
+    ROM(Logger& logger);
     ~ROM() override = default;
 
     void handleClockTick() override;

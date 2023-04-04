@@ -35,3 +35,6 @@
 .build
 build
 CMakeUserPresets.json
+
+# Project Files
+.vscode

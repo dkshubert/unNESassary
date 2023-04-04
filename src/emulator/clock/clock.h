@@ -8,6 +8,8 @@
 namespace unnes
 {
 
+class Logger;
+
 struct IClockedDevice
 {
     virtual ~IClockedDevice() = default;
@@ -22,9 +24,10 @@ class Clock
     std::uint32_t _speedHz { ntsc::kSpeedHz };
     std::uint64_t _cycleNum { 0 };
     std::vector<IClockedDevice*> _connectedDevices;
+    Logger& _logger;
 
 public:
-    Clock() = default;
+    Clock(Logger& logger);
 
     void connect(const std::vector<IClockedDevice*>& devices);
 
@@ -34,6 +37,7 @@ public:
     std::uint64_t tick();
 
     /// @return Returns the currently set clock speed, in Hz. 
+    [[nodiscard]]
     std::uint32_t getSpeedHz() const;
 };
 

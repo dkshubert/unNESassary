@@ -1,7 +1,6 @@
 #pragma once
 
 #include "apu.h"
-#include "clock.h"
 #include "cpu.h"
 #include "ppu.h"
 #include "ram.h"
@@ -10,18 +9,22 @@
 namespace unnes
 {
 
+class Clock;
+class Logger;
+
 class NES
 {
     double _previousTime { 0 };
-    Clock _clock {};
-    CPU _cpu {};
-    PPU _ppu {};
-    APU _apu {};
-    RAM _ram {};
-    ROM _rom {};
+    Logger& _logger;
+    Clock _clock;
+    CPU _cpu;
+    PPU _ppu;
+    APU _apu;
+    RAM _ram;
+    ROM _rom;
 
 public:
-    NES();
+    NES(Logger& logger);
 
     void run(double time);
 };

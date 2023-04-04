@@ -1,9 +1,16 @@
 #include <cstdint>
 
 #include "clock.h"
+#include "logger.h"
 
 namespace unnes
 {
+
+Clock::Clock(Logger& logger)
+    : _connectedDevices()
+    , _logger(logger)
+{
+}
 
 void Clock::connect(const std::vector<IClockedDevice*>& devices)
 {
