@@ -4,23 +4,20 @@ project(unNESassary)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+file(GLOB_RECURSE SOURCES src/*.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE src)
+
 find_package(fmt REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(OpenGL REQUIRED)
-
-add_executable(
-    ${PROJECT_NAME}
-    src/main.cpp
-    src/emulator/nes/apu/apu.cpp
-    src/emulator/nes/clock/clock.cpp
-    src/emulator/nes/cpu/cpu.cpp
-    src/emulator/nes/memory/ram.cpp
-    src/emulator/nes/memory/rom.cpp
-    src/emulator/nes/nes.cpp
-    src/emulator/nes/ppu/ppu.cpp
-    src/emulator/tv/tv.cpp
-    src/utils/logger.cxx
-    src/utils/stdoutlogger.cpp
+target_link_libraries(
+    ${PROJECT_NAME} PRIVATE
+    fmt::fmt
+    glfw
+    OpenGL::OpenGL
+    OpenGL::GLU
 )
 
 target_include_directories(
@@ -39,15 +36,29 @@ target_include_directories(
 
 target_compile_options(
     ${PROJECT_NAME} PRIVATE
+    -pedantic
     -Wall
     -Wextra
-    -Wpedantic
-)
-
-target_link_libraries(
-    ${PROJECT_NAME} PRIVATE
-    fmt::fmt
-    glfw
-    OpenGL::OpenGL
-    OpenGL::GLU
+    -Wcast-align
+    -Wcast-qual
+    -Wctor-dtor-privacy
+    -Wdisabled-optimization
+    -Wformat=2
+    -Winit-self
+    -Wlogical-op
+    -Wmissing-declarations
+    -Wmissing-include-dirs
+    -Wnoexcept
+    -Wold-style-cast
+    -Woverloaded-virtual
+    -Wredundant-decls
+    -Wshadow
+    -Wsign-conversion
+    -Wsign-promo
+    -Wstrict-null-sentinel
+    -Wstrict-overflow=5
+    -Wswitch-default
+    -Wundef
+    -Wno-unused
+    -Werror
 )
