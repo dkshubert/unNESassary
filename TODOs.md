@@ -2,7 +2,7 @@
 
 This is not comprehensive. I'm in the midst of a new-project flurry of doing a million tasks, so this list is going to be missing items for sure. Ranked in terms of priority, from highest to lowest priority, this is the set of tasks I'll be working in upcoming contributions:
 
-- Doxygen generation
+- Make exiting the application super easy, to speed up the build + test cycle
 - Add unit tests
 - Implement cartridge ROM file loading
 - Add a conf file that controls
