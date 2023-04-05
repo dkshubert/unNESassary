@@ -7,6 +7,7 @@ This is not comprehensive. I'm in the midst of a new-project flurry of doing a m
   - controller mappings + hotkeys
   - log level
   - last played ROM
+- Implement cartridge ROM file loading
 - Add unit tests
 - Pull in test ROMs (this might change how the logger needs to work, depending on how the validation for the test ROMs work)
 - Add a scanline renderer in opengl
