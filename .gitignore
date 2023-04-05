@@ -36,5 +36,8 @@
 build
 CMakeUserPresets.json
 
+# Generated Documentation
+documentation
+
 # Project Files
 .vscode

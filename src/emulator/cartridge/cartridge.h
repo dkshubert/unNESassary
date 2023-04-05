@@ -8,7 +8,7 @@ namespace unnes
 
 class Logger;
 
-/// @brief Represents a game (or test) NES cartridge
+/// @brief Represents a game (or test) NES cartridge, which is loaded from an ".nes" ROM from the filesystem.
 class Cartridge
 {
     Logger& _logger;

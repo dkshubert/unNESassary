@@ -5,5 +5,6 @@ Yet another NES emulator.
 
 - CMake
 - conan
+- openGL
 - clang-format
-
+- doxygen
