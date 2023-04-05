@@ -31,7 +31,7 @@ TV::~TV()
 
 bool TV::isOn() const { return !glfwWindowShouldClose(_window); }
 
-void TV::run(double /* time */)
+bool TV::run(double /* time */)
 {
     double x { 0 };
     double y { 0 };
@@ -54,6 +54,8 @@ void TV::run(double /* time */)
     // Swap buffers
     glfwSwapBuffers(_window);
     glfwPollEvents();
+
+    return true;
 }
 
 }  // namespace unnes

@@ -12,11 +12,13 @@ CPU::CPU(Logger& logger)
 {
 }
 
-void CPU::handleClockTick(std::uint64_t tickNum)
+bool CPU::handleClockTick(std::uint64_t tickNum)
 {
     _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
     // TODO
+
+    return true;
 }
 
 }  // namespace unnes

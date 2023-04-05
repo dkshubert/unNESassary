@@ -25,33 +25,12 @@ NES::NES(Logger& logger)
     _clock.connect(devices);
 }
 
-void NES::run(double time)
-{
-    const double timeDelta { time - _previousTime };
+bool NES::run(double time) { return _clock.run(time); }
 
-    // Note : some kind of narrowing conversion here is desired, though the rounding used here
-    // almost certainly results in less fidelitous clock timing, which means this approach for
-    // determining the # of cycles to execute since the last run might need to be revised when this
-    // project is further along. This will probably work reasonably well for the time being, though.
-    const std::uint32_t numCyclesToRun = _clock.getSpeedHz() * timeDelta;
-
-    _logger.write(LogLevel::trace,                                                   //
-                  fmt::format("time: {}, previous time: {}, num cycles to run: {}",  //
-                              time,                                                  //
-                              _previousTime,                                         //
-                              numCyclesToRun));
-
-    for (std::uint32_t i { 0 }; i < numCyclesToRun; i++) {
-        _clock.tick();
-    }
-
-    _previousTime = time;
-}
-
-void NES::insertCart(const std::string_view romPath)
+bool NES::insertCart(const std::string_view romPath)
 {
     _cartridge = std::make_unique<Cartridge>(_logger);
-    _cartridge->load(romPath);
+    return _cartridge->load(romPath);
 }
 
 void NES::ejectCart() { _cartridge.release(); }

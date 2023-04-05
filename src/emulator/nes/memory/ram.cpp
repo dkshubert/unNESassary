@@ -12,11 +12,13 @@ RAM::RAM(Logger& logger)
 {
 }
 
-void RAM::handleClockTick(std::uint64_t tickNum)
+bool RAM::handleClockTick(std::uint64_t tickNum)
 {
     _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
     // TODO
+
+    return true;
 }
 
 }  // namespace unnes

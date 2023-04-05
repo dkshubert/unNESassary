@@ -19,16 +19,15 @@ enum class LogLevel {
 
 class Logger
 {
-private:
     LogLevel _level = LogLevel::info;
 
 protected:
-    Logger() = default;
-    virtual ~Logger() = default;
-
     virtual void write(const std::string_view message) const = 0;
 
 public:
+    Logger() = default;
+    virtual ~Logger() = default;
+
     void setLevel(LogLevel level);
     void write(LogLevel level,                                                                //
                const std::string_view message,                                                //

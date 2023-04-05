@@ -24,7 +24,12 @@ public:
 
     /// @return True if the TV is turned on, False if it has been switched off.
     bool isOn() const;
-    void run(double time);
+
+    /// @brief Emulates a TV, emulating as much is necessary since the previous call to run().
+    ///
+    /// @param time The time (in seconds) since boot.
+    /// @returns True if the TV successfully ran, false otherwise.
+    [[nodiscard]] bool run(double time);
 };
 
 }  // namespace unnes

@@ -15,7 +15,7 @@ public:
     PPU(Logger& logger);
     ~PPU() override = default;
 
-    void handleClockTick(std::uint64_t tickNum) override;
+    bool handleClockTick(std::uint64_t tickNum) override;
 };
 
 }  // namespace unnes

@@ -6,7 +6,5 @@ int main()
     unnes::ApplicationConfig config;
     unnes::Application application { config };
 
-    application.run();
-
-    return 0;
+    return application.run() ? 0 : -1;
 }

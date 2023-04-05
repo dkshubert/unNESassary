@@ -15,7 +15,7 @@ public:
     ROM(Logger& logger);
     ~ROM() override = default;
 
-    void handleClockTick(std::uint64_t tickNum) override;
+    [[nodiscard]] bool handleClockTick(std::uint64_t tickNum) override;
 };
 
 }  // namespace unnes
