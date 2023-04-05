@@ -15,6 +15,9 @@ class Cartridge
 
 public:
     Cartridge(Logger& logger, const std::string_view romPath);
+
+    /// @brief Enables debugging
+    void furiouslyBlowOutDust();
 };
 
 }  // namespace unnes

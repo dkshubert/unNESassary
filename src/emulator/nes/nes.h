@@ -12,7 +12,6 @@
 namespace unnes
 {
 
-class Cartridge;
 class Clock;
 class Logger;
 
@@ -32,6 +31,8 @@ public:
     NES(Logger& logger);
 
     void insertCart(const std::string_view romPath);
+    void ejectCart();
+
     void run(double time);
 };
 

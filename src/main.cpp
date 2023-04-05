@@ -7,14 +7,17 @@ int main()
 {
     unnes::StdOutLogger logger;
     unnes::NES nes(logger);
-    nes.insertCart("testRom.nes");
     unnes::TV tv(logger);
+
+    nes.insertCart("testRom.nes");
 
     while (tv.isOn()) {
         const double time { unnes::getTime() };
         nes.run(time);
         tv.run(time);
     }
+
+    nes.ejectCart();
 
     return 0;
 }

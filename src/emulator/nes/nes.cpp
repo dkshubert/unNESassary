@@ -53,4 +53,6 @@ void NES::insertCart(const std::string_view romPath)
     _cartridge = std::make_unique<Cartridge>(_logger, romPath);
 }
 
+void NES::ejectCart() { _cartridge.release(); }
+
 }  // namespace unnes
