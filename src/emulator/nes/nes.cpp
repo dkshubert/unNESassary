@@ -50,7 +50,8 @@ void NES::run(double time)
 
 void NES::insertCart(const std::string_view romPath)
 {
-    _cartridge = std::make_unique<Cartridge>(_logger, romPath);
+    _cartridge = std::make_unique<Cartridge>(_logger);
+    _cartridge->load(romPath);
 }
 
 void NES::ejectCart() { _cartridge.release(); }

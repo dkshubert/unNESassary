@@ -8,7 +8,7 @@ namespace unnes
 class StdOutLogger : public Logger
 {
 public:
-    StdOutLogger() = default;
+    StdOutLogger(LogLevel level);
     ~StdOutLogger() override = default;
 
 protected:

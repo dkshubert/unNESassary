@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "logger.h"
 #include "tv_config.h"
 
 namespace unnes
@@ -13,6 +14,8 @@ struct ApplicationConfig {
     std::string _lastPlayedRomPath {
         "../external/nes-test-roms/cpu_dummy_reads/cpu_dummy_reads.nes"
     };
+
+    LogLevel _logLevel = LogLevel::info;
 
     TvConfig _tvConfig {};
 };

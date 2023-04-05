@@ -7,6 +7,8 @@ namespace unnes
 
 Application::Application(ApplicationConfig config)
     : _config(config),
+      _logger(_config._logLevel),
+      _nes(_logger),
       _tv(config._tvConfig, _logger)
 {
     _nes.insertCart(_config._lastPlayedRomPath);

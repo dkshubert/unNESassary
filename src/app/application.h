@@ -11,9 +11,9 @@ namespace unnes
 
 class Application
 {
-    StdOutLogger _logger {};
-    NES _nes { _logger };
     ApplicationConfig _config;
+    StdOutLogger _logger;
+    NES _nes;
     TV _tv;
 
 public:
