@@ -5,13 +5,13 @@
 #include "apu.h"
 #include "cpu.h"
 #include "ppu.h"
-#include "cart.h"
+#include "cartridge.h"
 #include "ram.h"
 #include "rom.h"
 
 namespace unnes {
 
-class Cart;
+class Cartridge;
 class Clock;
 class Logger;
 
@@ -24,7 +24,7 @@ class NES {
     APU _apu;
     RAM _ram;
     ROM _rom;
-    std::unique_ptr<Cart> _cart{nullptr};
+    std::unique_ptr<Cartridge> _cartridge{nullptr};
 
    public:
     NES(Logger& logger);

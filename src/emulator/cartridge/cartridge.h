@@ -7,12 +7,12 @@ namespace unnes {
 
 class Logger;
 
-class Cart {
+class Cartridge {
     Logger& _logger;
     std::string _romPath;
 
    public:
-    Cart(Logger& logger, const std::string_view romPath);
+    Cartridge(Logger& logger, const std::string_view romPath);
 };
 
 }  // namespace unnes
