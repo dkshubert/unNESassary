@@ -3,20 +3,22 @@
 #include <memory>
 
 #include "apu.h"
+#include "cartridge.h"
 #include "cpu.h"
 #include "ppu.h"
-#include "cartridge.h"
 #include "ram.h"
 #include "rom.h"
 
-namespace unnes {
+namespace unnes
+{
 
 class Cartridge;
 class Clock;
 class Logger;
 
-class NES {
-    double _previousTime{0};
+class NES
+{
+    double _previousTime { 0 };
     Logger& _logger;
     Clock _clock;
     CPU _cpu;
@@ -24,9 +26,9 @@ class NES {
     APU _apu;
     RAM _ram;
     ROM _rom;
-    std::unique_ptr<Cartridge> _cartridge{nullptr};
+    std::unique_ptr<Cartridge> _cartridge { nullptr };
 
-   public:
+public:
     NES(Logger& logger);
 
     void insertCart(const std::string_view romPath);

@@ -2,13 +2,15 @@
 
 #include "clock.h"
 
-namespace unnes {
+namespace unnes
+{
 
 /// @brief The NES uses a modified 6502, an 8-bit processor with a 16-bit address bus.
-class CPU : public IClockedDevice {
+class CPU : public IClockedDevice
+{
     Logger& _logger;
 
-   public:
+public:
     CPU(Logger& logger);
     ~CPU() override = default;
 

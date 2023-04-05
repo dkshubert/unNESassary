@@ -3,15 +3,17 @@
 #include <string>
 #include <string_view>
 
-namespace unnes {
+namespace unnes
+{
 
 class Logger;
 
-class Cartridge {
+class Cartridge
+{
     Logger& _logger;
     std::string _romPath;
 
-   public:
+public:
     Cartridge(Logger& logger, const std::string_view romPath);
 };
 

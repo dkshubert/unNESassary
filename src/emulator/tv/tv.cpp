@@ -4,9 +4,12 @@
 
 #include "logger.h"
 
-namespace unnes {
+namespace unnes
+{
 
-TV::TV(Logger& logger) : _logger(logger) {
+TV::TV(Logger& logger)
+    : _logger(logger)
+{
     glfwInit();
 
     _window = glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr);
@@ -18,16 +21,18 @@ TV::TV(Logger& logger) : _logger(logger) {
     // glfwSetKeyCallback(_window, key_callback);
 }
 
-TV::~TV() {
+TV::~TV()
+{
     glfwDestroyWindow(_window);
     glfwTerminate();
 }
 
 bool TV::isOn() const { return !glfwWindowShouldClose(_window); }
 
-void TV::run(double /* time */) {
-    double x{0};
-    double y{0};
+void TV::run(double /* time */)
+{
+    double x { 0 };
+    double y { 0 };
 
     glfwGetCursorPos(_window, &x, &y);
 

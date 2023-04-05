@@ -2,7 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
-namespace unnes {
+namespace unnes
+{
 
 double getTime();
 

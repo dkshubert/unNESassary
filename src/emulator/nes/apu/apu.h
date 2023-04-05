@@ -2,14 +2,16 @@
 
 #include "clock.h"
 
-namespace unnes {
+namespace unnes
+{
 
 class Logger;
 
-class APU : public IClockedDevice {
+class APU : public IClockedDevice
+{
     Logger& _logger;
 
-   public:
+public:
     APU(Logger& logger);
     ~APU() override = default;
 

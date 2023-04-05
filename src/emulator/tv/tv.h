@@ -2,16 +2,18 @@
 
 class GLFWwindow;
 
-namespace unnes {
+namespace unnes
+{
 
 class Logger;
 
 /// @brief Television.
-class TV {
+class TV
+{
     Logger& _logger;
-    GLFWwindow* _window{nullptr};
+    GLFWwindow* _window { nullptr };
 
-   public:
+public:
     TV(Logger& logger);
     ~TV();
 

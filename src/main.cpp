@@ -3,14 +3,15 @@
 #include "time_utils.h"
 #include "tv.h"
 
-int main() {
+int main()
+{
     unnes::StdOutLogger logger;
     unnes::NES nes(logger);
     nes.insertCart("testRom.nes");
     unnes::TV tv(logger);
 
     while (tv.isOn()) {
-        const double time{unnes::getTime()};
+        const double time { unnes::getTime() };
         nes.run(time);
         tv.run(time);
     }

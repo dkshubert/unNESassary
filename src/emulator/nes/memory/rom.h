@@ -2,14 +2,16 @@
 
 #include "clock.h"
 
-namespace unnes {
+namespace unnes
+{
 
 class Logger;
 
-class ROM : public IClockedDevice {
+class ROM : public IClockedDevice
+{
     Logger& _logger;
 
-   public:
+public:
     ROM(Logger& logger);
     ~ROM() override = default;
 

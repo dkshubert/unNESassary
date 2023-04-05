@@ -1,4 +1,22 @@
 ---
 BasedOnStyle: Google
 IndentWidth: 4
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+IndentCaseLabels: true
+IndentCaseBlocks: true
 ColumnLimit: 100
+PointerAlignment: Left
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+IncludeBlocks: Regroup
+AlignAfterOpenBracket: Align
+SortIncludes: CaseInsensitive
+SpaceBeforeCpp11BracedList: true
+Cpp11BracedListStyle: false
+AllowShortBlocksOnASingleLine: Never
+AllowAllParametersOfDeclarationOnNextLine: true
+PackConstructorInitializers: Never
+ReflowComments: true
+SeparateDefinitionBlocks: Always
+BreakBeforeBraces: Linux

@@ -3,7 +3,8 @@
 #include <source_location>
 #include <string_view>
 
-namespace unnes {
+namespace unnes
+{
 
 enum class LogLevel {
     all = 7,
@@ -16,20 +17,22 @@ enum class LogLevel {
     off = 0
 };
 
-class Logger {
-   private:
+class Logger
+{
+private:
     LogLevel _level = LogLevel::info;
 
-   protected:
+protected:
     Logger() = default;
     virtual ~Logger() = default;
 
     virtual void write(const std::string_view message) const = 0;
 
-   public:
+public:
     void setLevel(LogLevel level);
-    void write(LogLevel level, const std::string_view message,
-               const std::source_location location = std::source_location::current()) const;
+    void write(LogLevel level,                                                                //
+               const std::string_view message,                                                //
+               const std::source_location location = std::source_location::current()) const;  //
 };
 
 }  // namespace unnes
