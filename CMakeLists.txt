@@ -35,31 +35,31 @@ target_include_directories(
     src/utils
 )
 
-target_compile_options(
-    ${PROJECT_NAME} PRIVATE
-    -pedantic
-    -Wall
-    -Wextra
-    -Wcast-align
-    -Wcast-qual
-    -Wctor-dtor-privacy
-    -Wdisabled-optimization
-    -Wformat=2
-    -Winit-self
-    -Wlogical-op
-    -Wmissing-declarations
-    -Wmissing-include-dirs
-    -Wnoexcept
-    -Wold-style-cast
-    -Woverloaded-virtual
-    -Wredundant-decls
-    -Wshadow
-    -Wsign-conversion
-    -Wsign-promo
-    -Wstrict-null-sentinel
-    -Wstrict-overflow=5
-    -Wswitch-default
-    -Wundef
-    -Wno-unused
-    -Werror
-)
+if (${CMAKE_COMPILER_IS_GNUCXX})
+    target_compile_options(
+        ${PROJECT_NAME} PRIVATE
+        -pedantic
+        -Wall
+        -Wextra
+        -Wcast-align
+        -Wcast-qual
+        -Wctor-dtor-privacy
+        -Wdisabled-optimization
+        -Wformat=2
+        -Winit-self
+        -Wlogical-op
+        -Wmissing-declarations
+        -Wmissing-include-dirs
+        -Wold-style-cast
+        -Woverloaded-virtual
+        -Wredundant-decls
+        -Wshadow
+        -Wsign-conversion
+        -Wsign-promo
+        -Wstrict-null-sentinel
+        -Wstrict-overflow=5
+        -Wswitch-default
+        -Wundef
+        -Werror
+    )
+endif()
