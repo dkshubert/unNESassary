@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <memory>
 
 #include "application_config.h"
@@ -18,9 +19,11 @@ class Logger;
 class Application
 {
     ApplicationConfig _config;
+    bool _closeRequested { false };
     std::unique_ptr<Logger> _logger { nullptr };
     NES _nes;
     TV _tv;
+    std::array<IElectronicDevice*, 2> _devices { &_nes, &_tv };
 
 public:
     Application(ApplicationConfig config);

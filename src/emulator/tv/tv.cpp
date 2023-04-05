@@ -29,9 +29,7 @@ TV::~TV()
     glfwTerminate();
 }
 
-bool TV::isOn() const { return !glfwWindowShouldClose(_window); }
-
-bool TV::run(double /* time */)
+bool TV::update(double /* time */)
 {
     double x { 0 };
     double y { 0 };
@@ -57,5 +55,17 @@ bool TV::run(double /* time */)
 
     return true;
 }
+
+void TV::turnOn()
+{
+    // no-op
+}
+
+void TV::turnOff()
+{
+    // no-op
+}
+
+bool TV::isOn() const { return !glfwWindowShouldClose(_window); }
 
 }  // namespace unnes

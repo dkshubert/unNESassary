@@ -1,5 +1,6 @@
 #pragma once
 
+#include "electronic_device.h"
 #include "nes.h"
 #include "stdoutlogger.h"
 #include "tv_config.h"
@@ -12,7 +13,7 @@ namespace unnes
 class Logger;
 
 /// @brief Television.
-class TV
+class TV : public IElectronicDevice
 {
     TvConfig _tvConfig;
     Logger& _logger;
@@ -22,14 +23,10 @@ public:
     TV(TvConfig tvConfig, Logger& logger);
     ~TV();
 
-    /// @return True if the TV is turned on, False if it has been switched off.
-    bool isOn() const;
-
-    /// @brief Emulates a TV, emulating as much is necessary since the previous call to run().
-    ///
-    /// @param time The time (in seconds) since boot.
-    /// @returns True if the TV successfully ran, false otherwise.
-    [[nodiscard]] bool run(double time);
+    void turnOn() override;
+    void turnOff() override;
+    [[nodiscard]] bool isOn() const override;
+    [[nodiscard]] bool update(double time) override;
 };
 
 }  // namespace unnes

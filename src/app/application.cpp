@@ -28,17 +28,13 @@ bool Application::run()
         return false;
     }
 
-    while (_tv.isOn()) {
+    while (!_closeRequested) {
         const double time { unnes::getTime() };
 
-        if (!_nes.run(time)) {
-            _logger->write(LogLevel::error, "NES emulator failure.");
-            return false;
-        }
-
-        if (!_tv.run(time)) {
-            _logger->write(LogLevel::error, "NES emulator failure.");
-            return false;
+        for (auto& device : _devices) {
+            if (device->isOn() && !device->update(time)) {
+                return false;
+            }
         }
     }
 

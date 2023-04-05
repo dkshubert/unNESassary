@@ -25,7 +25,7 @@ NES::NES(Logger& logger)
     _clock.connect(devices);
 }
 
-bool NES::run(double time) { return _clock.run(time); }
+bool NES::update(double time) { return _clock.run(time); }
 
 bool NES::insertCart(const std::string_view romPath)
 {
@@ -34,5 +34,14 @@ bool NES::insertCart(const std::string_view romPath)
 }
 
 void NES::ejectCart() { _cartridge.release(); }
+
+void NES::turnOn()
+{
+    // no-op
+}
+
+void NES::turnOff() {}
+
+bool NES::isOn() const { return true; }
 
 }  // namespace unnes

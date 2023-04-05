@@ -5,6 +5,7 @@
 #include "apu.h"
 #include "cartridge.h"
 #include "cpu.h"
+#include "electronic_device.h"
 #include "ppu.h"
 #include "ram.h"
 #include "rom.h"
@@ -16,7 +17,7 @@ class Clock;
 class Logger;
 
 /// @brief The NES emulator! This class contains all NES hardware components,
-class NES
+class NES : public IElectronicDevice
 {
     Logger& _logger;
     Clock _clock;
@@ -37,11 +38,10 @@ public:
     [[nodiscard]] bool insertCart(const std::string_view romPath);
     void ejectCart();
 
-    /// @brief Runs the NES emulator, emulating as much as neccessary since the last call to run.
-    ///
-    /// @param time The time since boot (in seconds).
-    /// @return True if this time slice has been successfully emulated, false otherwise.
-    [[nodiscard]] bool run(double time);
+    void turnOn() override;
+    void turnOff() override;
+    [[nodiscard]] bool isOn() const override;
+    [[nodiscard]] bool update(double time) override;
 };
 
 }  // namespace unnes
