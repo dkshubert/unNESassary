@@ -7,12 +7,14 @@
 namespace unnes
 {
 
-TV::TV(Logger& logger)
-    : _logger(logger)
+TV::TV(TvConfig tvConfig, Logger& logger)
+    : _tvConfig(tvConfig),
+      _logger(logger)
 {
     glfwInit();
 
-    _window = glfwCreateWindow(1024, 768, "unNESassary", nullptr, nullptr);
+    _window = glfwCreateWindow(_tvConfig._widthPixels, _tvConfig._heightPixels, "unNESassary",
+                               nullptr, nullptr);
     if (!_window) {
         glfwTerminate();
     }
