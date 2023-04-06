@@ -8,7 +8,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt upgrade -y
 
-# Install dependencies
+# Install dependencies. The `opengl/system` conan requirement
+# really requires everything up to the kitchen sink. It would
+# be nice to trim this list down, if possible, but it appears
+# this full list is required to satisfy conan.
 RUN apt install -y \
 cmake \
 clang-format \
