@@ -16,12 +16,22 @@ class Logger;
 class TV : public IElectronicDevice
 {
     TvConfig _tvConfig;
-    Logger& _logger;
     GLFWwindow* _window { nullptr };
+    Logger& _logger;
 
 public:
     TV(TvConfig tvConfig, Logger& logger);
-    ~TV();
+    ~TV() = default;
+
+    /// @brief Sets the GLFW window
+    ///
+    /// @todo This method will probably get deleted when a rudimentary graphics lib is implemented.
+    ///
+    /// @param window A pointer to the application's GLFW window.
+    void setWindow(GLFWwindow* window);
+
+    /// @brief Renders a single scanline.
+    void renderScanline(/*scanlineBuffer, row*/);
 
     void turnOn() override;
     void turnOff() override;

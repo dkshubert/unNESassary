@@ -38,6 +38,13 @@ class Clock
 
     Logger& _logger;
 
+    /// @brief Calculates the number of cycles to run.
+    ///
+    /// @param time The time (in seconds) since boot.
+    /// @return The total number of cycles to run, given the time delta between the previous time
+    /// Clock::run was called.
+    [[nodiscard]] std::uint32_t calculateCyclesToRun(double time) const;
+
 public:
     Clock(Logger& logger);
 
@@ -61,7 +68,8 @@ public:
     /// otherwise.
     [[nodiscard]] bool tick();
 
-    /// @return Returns the currently set clock speed, in Hz.
+    /// @brief Gets the currently set clock speed, in Hz.
+    /// @returns Returns the currently set clock speed, in Hz.
     [[nodiscard]] std::uint32_t getSpeedHz() const;
 };
 

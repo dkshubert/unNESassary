@@ -16,19 +16,41 @@ Application::Application(ApplicationConfig config)
       _nes(*_logger),
       _tv(config._tvConfig, *_logger)
 {
+    glfwInit();
+
+    // Needs to be called after glfwInit().
+    _window =
+        glfwCreateWindow(_config._tvConfig._windowWidthPixels,
+                         _config._tvConfig._windowHeightPixels, "unNESassary", nullptr, nullptr);
+    _tv.setWindow(_window);
+
+    glfwMakeContextCurrent(_window);
+
+    // glfwSetKeyCallback(_window, key_callback);
 }
 
-Application::~Application() { _nes.ejectCart(); }
+Application::~Application()
+{
+    _nes.ejectCart();
+    glfwDestroyWindow(_window);
+    glfwTerminate();
+}
 
 bool Application::run()
 {
+    if (!_window) {
+        _logger->write(LogLevel::error, fmt::format("Failed to create an application window."));
+
+        return false;
+    }
+
     if (!_nes.insertCart(_config._lastPlayedRomPath)) {
         _logger->write(LogLevel::error, fmt::format("Failed to insert cartridge."));
 
         return false;
     }
 
-    while (!_closeRequested) {
+    while (!_shutdownRequested) {
         const double time { unnes::getTime() };
 
         for (auto& device : _devices) {
@@ -36,6 +58,10 @@ bool Application::run()
                 return false;
             }
         }
+
+        glfwGetCursorPos(_window, &_cursorX, &_cursorY);
+
+        glfwPollEvents();
     }
 
     return true;

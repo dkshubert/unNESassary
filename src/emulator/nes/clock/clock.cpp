@@ -2,8 +2,6 @@
 
 #include <fmt/core.h>
 
-#include <cstdint>
-
 #include "logger.h"
 
 namespace unnes
@@ -19,7 +17,7 @@ void Clock::connect(const std::vector<IClockedDevice*>& devices)
     _connectedDevices.insert(_connectedDevices.end(), devices.begin(), devices.end());
 }
 
-bool Clock::run(double time)
+std::uint32_t Clock::calculateCyclesToRun(double time) const
 {
     const double timeDelta { time - _previousTime };
 
@@ -27,13 +25,12 @@ bool Clock::run(double time)
     // almost certainly results in less fidelitous clock timing, which means this approach for
     // determining the # of cycles to execute since the last run might need to be revised when this
     // project is further along. This will probably work reasonably well for the time being, though.
-    const std::uint32_t numCyclesToRun = getSpeedHz() * timeDelta;
+    return getSpeedHz() * timeDelta;
+}
 
-    _logger.write(LogLevel::trace,                                                   //
-                  fmt::format("time: {}, previous time: {}, num cycles to run: {}",  //
-                              time,                                                  //
-                              _previousTime,                                         //
-                              numCyclesToRun));
+bool Clock::run(double time)
+{
+    const std::uint32_t numCyclesToRun { calculateCyclesToRun(time) };
 
     for (std::uint32_t i { 0 }; i < numCyclesToRun; i++) {
         if (!tick()) {

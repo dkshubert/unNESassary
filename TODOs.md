@@ -15,5 +15,6 @@ This is not comprehensive. I'm in the midst of a new-project flurry of doing a m
 - Update README
 - Figure out how to actually produce a debug build and make conan's dependencies still resolve correctly
 - Support windows and mac builds
+- Cleanup TODOs
 
 

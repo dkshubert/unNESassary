@@ -14,16 +14,27 @@ namespace unnes
 
 class Logger;
 
+constexpr size_t kNumEmulatedDevices = 2;
+using DeviceList = std::array<IElectronicDevice*, kNumEmulatedDevices>;
+
 /// @brief This is the main application class, used to house all objects that need to exists for the
 /// lifetime of the application (the core abstractions like the NES and TV emulators, specifically)
 class Application
 {
+    // Application management members
     ApplicationConfig _config;
-    bool _closeRequested { false };
+    bool _shutdownRequested { false };
+    GLFWwindow* _window { nullptr };  // wrap in unique_ptr with custom deleter
     std::unique_ptr<Logger> _logger { nullptr };
+
+    // TODO: better encapsulate these mouse coordinates, probably in some AppGUI class.
+    double _cursorX { 0 };
+    double _cursorY { 0 };
+
+    // The emulated device list
     NES _nes;
     TV _tv;
-    std::array<IElectronicDevice*, 2> _devices { &_nes, &_tv };
+    DeviceList _devices { &_nes, &_tv };
 
 public:
     Application(ApplicationConfig config);
