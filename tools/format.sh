@@ -4,5 +4,4 @@ SCRIPT_DIR=$(dirname $0)
 PROJECT_ROOT=$SCRIPT_DIR/..
 
 cd $PROJECT_ROOT
-find src -iname *.h -o -iname *.cpp | xargs clang-format -i
-
+./tools/via_docker.sh /home/containeruser/unNES/tools/native/format.sh

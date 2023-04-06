@@ -17,7 +17,6 @@ target_link_libraries(
     fmt::fmt
     glfw
     OpenGL::OpenGL
-    OpenGL::GLU
 )
 
 target_include_directories(

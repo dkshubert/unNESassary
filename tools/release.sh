@@ -5,7 +5,4 @@ PROJECT_ROOT=$SCRIPT_DIR/..
 
 cd $PROJECT_ROOT
 
-./tools/format.sh
-./tools/generate_docs.sh
-./tools/build.sh
-./tools/run.sh
+./tools/via_docker.sh /home/containeruser/unNES/tools/native/release.sh
