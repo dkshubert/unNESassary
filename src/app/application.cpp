@@ -1,6 +1,5 @@
 #include "application.h"
 
-#include <fmt/core.h>
 #include <GLFW/glfw3.h>
 
 #include "stdout_logger.h"
@@ -48,13 +47,13 @@ Application::~Application()
 int Application::run()
 {
     if (!_window) {
-        _logger->write(LogLevel::error, fmt::format("Failed to create an application window."));
+        _logger->write(LogLevel::error, "Failed to create an application window.");
 
         return kExitFailure;
     }
 
     if (!_nes.insertCart(_config._lastPlayedRomPath)) {
-        _logger->write(LogLevel::error, fmt::format("Failed to insert cartridge."));
+        _logger->write(LogLevel::error, "Failed to insert cartridge.");
 
         return kExitFailure;
     }
@@ -69,6 +68,8 @@ bool Application::runMainLoop()
 
         for (auto& device : _devices) {
             if (!device->update(time)) {
+                _logger->write(LogLevel::error,
+                               "Emulated device failed to update. Exiting main loop.");
                 return false;
             }
         }
