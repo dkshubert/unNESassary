@@ -6,6 +6,8 @@
 #include <map>
 #include <vector>
 
+#include "point.h"
+
 class GLFWwindow;
 
 namespace unnes
@@ -26,9 +28,7 @@ using KeyboardCallback = std::function<void(ButtonState)>;
 
 class InputHandler
 {
-    // TODO: better encapsulate these mouse coordinates, probably in some AppGUI class.
-    double _cursorX { 0 };
-    double _cursorY { 0 };
+    Point<double> _cursorPosition { ._x = 0, ._y = 0 };
     GLFWwindow* _window { nullptr };
     std::map<KeyCode, KeyboardCallback> _callbacks {};
 

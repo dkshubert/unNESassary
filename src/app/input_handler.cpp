@@ -60,6 +60,6 @@ void InputHandler::clearCallback(KeyCode keyCode)
     _callbacks.erase(keyCode);
 }
 
-void InputHandler::update() { glfwGetCursorPos(_window, &_cursorX, &_cursorY); }
+void InputHandler::update() { glfwGetCursorPos(_window, &_cursorPosition._x, &_cursorPosition._y); }
 
 }  // namespace unnes
