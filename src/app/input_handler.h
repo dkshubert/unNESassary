@@ -56,7 +56,7 @@ public:
     /// @brief Gets the current mouse coordinates.
     ///
     /// @return The current mouse coordinates.
-    Point<double> getMouseCoordinates();
+    [[nodiscard]] Point<double> getMouseCoordinates();
 
     /// @brief Sets the GLFW window
     ///

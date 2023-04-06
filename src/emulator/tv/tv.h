@@ -16,7 +16,8 @@ class Logger;
 
 using ScanlineBuffer = std::span<std::uint8_t, screen::kWidthPixels>;
 
-/// @brief Television.
+/// @brief The main television abstraction. TV is capable of rendering individual scanlines, or
+/// pixels.
 class TV : public IEmulatedDevice
 {
     TvConfig _config;
@@ -27,6 +28,11 @@ class TV : public IEmulatedDevice
     double _previousTime { 0 };
     std::uint16_t _currentScanlineRow { 0 };
 
+    /// @brief Calculates the number of scanlines to render since the last call to TV::update.
+    ///
+    /// @param time The time since application start, in seconds.
+    ///
+    /// @return The total number of scanlines that need to be drawn.
     std::uint16_t calculateNumScanlinesToRender(double time) const;
 
 public:
@@ -49,8 +55,9 @@ public:
 
     /// @brief Renders a single pixel. The coordinate system spans from (-1,-1) top-left, to (1,1)
     /// bottom-right, inherited from GLFW.
-    /// @param x
-    /// @param y
+    /// @param x The x coordinate of the pixel to be rendered, spanning from -1 (leftmost) to 1
+    /// (rightmost).
+    /// @param y The y coordinate of the pixel to be rendered, spanning from 1 (top) to -1 (bottom).
     /// @param color
     void renderPixel(float x, float y, std::uint8_t color);
 

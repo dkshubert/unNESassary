@@ -27,7 +27,7 @@ class Application
     // Application management members
     ApplicationConfig _config;
     GLFWwindow* _window { nullptr };  // This is a C resource. It probably makes sense to wrap this
-                                      // in a unique_ptr with a custom deleter.
+                                      // in a unique_ptr with a custom deleter (TODO).
     std::unique_ptr<Logger> _logger { nullptr };
     bool _shutdownRequested { false };
     InputHandler _inputHandler;
@@ -42,7 +42,7 @@ class Application
     ///
     /// @return True if the main loop exited gracefully as a result of a user application shutdown
     /// request. This function will return false if an error caused the loop to shutdown.
-    bool runMainLoop();
+    [[nodiscard]] bool runMainLoop();
 
 public:
     Application(ApplicationConfig config);

@@ -4,7 +4,7 @@ namespace unnes
 {
 
 /// @brief An interface representing a real world electronic device with which a user can interact.
-/// For example, an NES or a Television.
+/// For example, an NES or a TV.
 struct IEmulatedDevice {
     /// @brief Implementers of this method calculate the time difference since the last call to
     /// update, and perform as many updates as is required to catch up to the current time. The
