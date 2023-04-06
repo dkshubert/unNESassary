@@ -56,21 +56,21 @@ void Application::_handleKeypress(GLFWwindow* window, int key, int scancode, int
     }
 }
 
-bool Application::run()
+int Application::run()
 {
     if (!_window) {
         _logger->write(LogLevel::error, fmt::format("Failed to create an application window."));
 
-        return false;
+        return kExitFailure;
     }
 
     if (!_nes.insertCart(_config._lastPlayedRomPath)) {
         _logger->write(LogLevel::error, fmt::format("Failed to insert cartridge."));
 
-        return false;
+        return kExitFailure;
     }
 
-    return runMainLoop();  // blocks until app shutdown
+    return runMainLoop() ? kExitSuccess : kExitFailure;  // blocks until app shutdown
 }
 
 bool Application::runMainLoop()

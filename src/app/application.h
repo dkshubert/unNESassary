@@ -14,6 +14,8 @@ namespace unnes
 
 class Logger;
 
+static constexpr int kExitSuccess = 0;
+static constexpr int kExitFailure = -1;
 constexpr size_t kNumEmulatedDevices = 2;
 using DeviceList = std::array<IEmulatedDevice*, kNumEmulatedDevices>;
 
@@ -73,9 +75,9 @@ public:
 
     /// @brief Runs the application. This method manages the main program loop.
     ///
-    /// @returns True if the application exited successfully (intentionally user terminated), false
-    /// otherwise.
-    [[nodiscard]] bool run();
+    /// @returns 0 if and only if the program exited successfully. This return value is the command
+    /// line exit status of this application (for example, the value of $? on linux).
+    [[nodiscard]] int run();
 };
 
 }  // namespace unnes
