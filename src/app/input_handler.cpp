@@ -52,10 +52,10 @@ void InputHandler::handleKeypress(int key, int scancode, int action, int mods)
 
 Point<double> InputHandler::getMouseCoordinates() { return _cursorPosition; }
 
-void InputHandler::registerCallback(KeyCode keyCode, KeyboardCallback callback)
+void InputHandler::registerCallback(KeyCode keyCode, KeyboardCallback&& callback)
 {
     _logger.write(LogLevel::info, fmt::format("Registered handler for key: {}", keyCode));
-    _callbacks[keyCode] = callback;
+    _callbacks[keyCode] = std::move(callback);
 }
 
 void InputHandler::clearCallback(KeyCode keyCode)

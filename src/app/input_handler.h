@@ -72,7 +72,7 @@ public:
     /// cross that road when it becomes necessary.
     /// @param keyCode A code representing the key that was pressed.
     /// @param callback The callback that will be invoked when keyCode is pressed.
-    void registerCallback(KeyCode keyCode, KeyboardCallback callback);
+    void registerCallback(KeyCode keyCode, KeyboardCallback&& callback);
 
     /// @brief Clears a registered callback.
     ///
