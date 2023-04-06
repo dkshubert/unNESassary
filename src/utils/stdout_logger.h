@@ -5,11 +5,11 @@
 namespace unnes
 {
 
-class StdOutLogger : public Logger
+class stdout_logger : public Logger
 {
 public:
-    StdOutLogger(LogLevel level);
-    ~StdOutLogger() override = default;
+    stdout_logger(LogLevel level);
+    ~stdout_logger() override = default;
 
 protected:
     void write(std::string_view message) const override;

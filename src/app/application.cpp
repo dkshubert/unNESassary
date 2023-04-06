@@ -2,7 +2,7 @@
 
 #include <fmt/core.h>
 
-#include "stdoutlogger.h"
+#include "stdout_logger.h"
 #include "time_utils.h"
 
 namespace unnes
@@ -12,7 +12,7 @@ Application::Application(ApplicationConfig config)
     : _config(config),
       // TODO: choose the type of logger to construct based on the application config, via some
       // logger factory function.
-      _logger(std::make_unique<StdOutLogger>(_config._logLevel)),
+      _logger(std::make_unique<stdout_logger>(_config._logLevel)),
       _nes(*_logger),
       _tv(config._tvConfig, *_logger)
 {

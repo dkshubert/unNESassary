@@ -2,8 +2,6 @@
 
 #include <fmt/core.h>
 
-#include <cstdint>
-
 #include "cartridge/cartridge.h"
 #include "clock.h"
 #include "logger.h"
