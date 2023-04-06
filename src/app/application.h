@@ -23,9 +23,9 @@ class Application
 {
     // Application management members
     ApplicationConfig _config;
-    bool _shutdownRequested { false };
     GLFWwindow* _window { nullptr };  // wrap in unique_ptr with custom deleter
     std::unique_ptr<Logger> _logger { nullptr };
+    bool _shutdownRequested { false };
 
     // TODO: better encapsulate these mouse coordinates, probably in some AppGUI class.
     double _cursorX { 0 };
@@ -36,9 +36,13 @@ class Application
     TV _tv;
     DeviceList _devices { &_nes, &_tv };
 
+    static void _handleKeypress(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 public:
     Application(ApplicationConfig config);
     ~Application();
+
+    void handleKeypress(int key, int scancode, int action, int mods);
 
     /// @brief Runs the application. This method manages the main program loop.
     ///
