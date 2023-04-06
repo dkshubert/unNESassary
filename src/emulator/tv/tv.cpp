@@ -41,7 +41,7 @@ void TV::renderScanline(ScanlineBuffer buffer)
         const float x { -1.0f + getPixelWidth() * i };
 
         // TODO: populate color value from buffer
-        renderPixel(x, y, buffer[i]);
+        renderPixel({ ._x = x, ._y = y }, buffer[i]);
     }
 
     _currentScanlineRow++;
@@ -55,13 +55,13 @@ void TV::renderScanline(ScanlineBuffer buffer)
     }
 }
 
-void TV::renderPixel(float x, float y, std::uint8_t color)
+void TV::renderPixel(Point<float> coords, std::uint8_t color)
 {
     glColor3f(color, color, color);
-    glVertex2f(x, y);                                      // upper left
-    glVertex2f(x + getPixelWidth(), y);                    // upper right
-    glVertex2f(x, y - getPixelWidth());                    // lower left
-    glVertex2f(x + getPixelWidth(), y - getPixelWidth());  // lower right
+    glVertex2f(coords._x, coords._y);                                      // upper left
+    glVertex2f(coords._x + getPixelWidth(), coords._y);                    // upper right
+    glVertex2f(coords._x, coords._y - getPixelWidth());                    // lower left
+    glVertex2f(coords._x + getPixelWidth(), coords._y - getPixelWidth());  // lower right
 }
 
 std::uint16_t TV::calculateNumScanlinesToRender(double time) const

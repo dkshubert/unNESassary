@@ -5,6 +5,7 @@
 #include "emulated_device.h"
 #include "logger.h"
 #include "nes_constants.h"
+#include "point.h"
 #include "tv_config.h"
 
 class GLFWwindow;
@@ -55,11 +56,11 @@ public:
 
     /// @brief Renders a single pixel. The coordinate system spans from (-1,-1) top-left, to (1,1)
     /// bottom-right, inherited from GLFW.
-    /// @param x The x coordinate of the pixel to be rendered, spanning from -1 (leftmost) to 1
-    /// (rightmost).
-    /// @param y The y coordinate of the pixel to be rendered, spanning from 1 (top) to -1 (bottom).
-    /// @param color
-    void renderPixel(float x, float y, std::uint8_t color);
+    /// @param coords The coordinates of the pixel to be rendered. The x coordinate of the pixel to
+    /// be rendered spans from -1 (leftmost) to 1 (rightmost). The y coordinate of the pixel to be
+    /// rendered spans from 1 (top) to -1 (bottom).
+    /// @param color The color of the pixel to be rendered.
+    void renderPixel(Point<float> coords, std::uint8_t color);
 
     [[nodiscard]] bool update(double time) override;
 };
