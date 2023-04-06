@@ -1,5 +1,5 @@
 # unNESassary
-Yet another NES emulator. This is a project started purely for fun to cross off two childhood/teenage dreams from my bucket list:
+Yet another NES emulator. This is a project started purely for fun, with the aim of crossing off two childhood/teenage dreams from my bucket list:
 
 - Writing an emulator
 - Beating Ninja Gaiden
@@ -43,8 +43,14 @@ I'm happy to receive feedback or make any change that furthers at least one of t
 
 - Emulation fidelity will be improved.
 - Performance will be improved, at no cost to emulation fidelity.
+- Code safety or correctness can be improved. By "safety", I mean specifically...
+  - memory safety
+  - type safety
+  - elimination of undefined behavior
+  - thread safety (this is a single threaded app, but interactions with system HW still results in some parallelism)
 - The C++ Core Guidelines suggests an alternative approach.
-- Code can be simplified, at no cost to emulation fidelity or performance, and the simplification adheres to the C++ Core Guidelines.
+- Code can be simplified, at no cost to emulation fidelity or performance, and the simplification adheres to the C++ Core Guidelines and is "safe", according to the safety requirements above.
+- Code readability/understandability can be increased, keeping with the conditions above.
 
 ## Current Project Status
 
