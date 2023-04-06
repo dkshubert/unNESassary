@@ -38,6 +38,6 @@ conan profile detect
 
 There's also a vaguely named (but convenient) `everything.sh` script that I've been using to do a complete code formatting, build, documentation generation, application test run to rapidly test changes.
 
-# Project Status
+## Current Project Status
 
-I'm still very much in the scaffolding stage of this project. Nothing works, and I'm just getting started loading ROMs. There's a list of [TODOs](./TODOS.md) that I'm keeping active until I get basic emulation working, at which point I plan on cutting over to the github issue tracker and getting more methodical about the individual bugs as they arise. Currently, however, the project is in such a state of newness that being overly formal about issue tracking seems like a waste of time.
+I'm still very much in the scaffolding stage of this project. Nothing works, and I'm just getting started loading ROMs. There's a list of [TODOs](./TODOs.md) that I'm keeping active until I get basic emulation working, at which point I plan on cutting over to the github issue tracker and getting more methodical about the individual bugs as they arise. Currently, however, the project is in such a state of newness that being overly formal about issue tracking seems like a waste of time.
