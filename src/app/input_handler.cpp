@@ -23,6 +23,8 @@ void InputHandler::setWindow(GLFWwindow* window)
     _window = window;
     glfwSetWindowUserPointer(_window, this);
     glfwSetKeyCallback(_window, _handleKeypress);
+
+    _logger.write(LogLevel::debug, "GLFW window set.");
 }
 
 void _handleKeypress(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -47,6 +49,8 @@ void InputHandler::handleKeypress(int key, int scancode, int action, int mods)
         callback(static_cast<ButtonState>(action));
     }
 }
+
+Point<double> InputHandler::getMouseCoordinates() { return _cursorPosition; }
 
 void InputHandler::registerCallback(KeyCode keyCode, KeyboardCallback callback)
 {

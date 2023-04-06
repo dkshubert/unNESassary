@@ -26,6 +26,9 @@ enum class ButtonState {
 using KeyCode = int;
 using KeyboardCallback = std::function<void(ButtonState)>;
 
+/// @brief This is the main input handler for the application. Any object interested in handling
+/// keyboard or mouse input from the user can register a callback to the sole InputHandler instance,
+/// which is owned by the Application class.
 class InputHandler
 {
     Point<double> _cursorPosition { ._x = 0, ._y = 0 };
@@ -50,6 +53,11 @@ public:
     /// would be GLFW_MOD_CONTROL (or GLFW_MOD_ALT, etc).
     void handleKeypress(int key, int scancode, int action, int mods);
 
+    /// @brief Gets the current mouse coordinates.
+    ///
+    /// @return The current mouse coordinates.
+    Point<double> getMouseCoordinates();
+
     /// @brief Sets the GLFW window
     ///
     /// @param window A pointer to the application's GLFW window.
@@ -71,6 +79,7 @@ public:
     /// @param keyCode The unique keyCode whose callback will be cleared.
     void clearCallback(KeyCode keyCode);
 
+    /// @brief Updates the input handler (the mouse coordinates specifically).
     void update();
 };
 
