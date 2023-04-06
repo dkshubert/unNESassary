@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include <fmt/core.h>
+#include <GLFW/glfw3.h>
 
 #include "stdout_logger.h"
 #include "time_utils.h"
@@ -13,6 +14,7 @@ Application::Application(ApplicationConfig config)
       // TODO: choose the type of logger to construct based on the application config, via some
       // logger factory function.
       _logger(std::make_unique<stdout_logger>(_config._logLevel)),
+      _inputHandler(*_logger),
       _nes(*_logger),
       _tv(config._tvConfig, *_logger)
 {
@@ -23,11 +25,16 @@ Application::Application(ApplicationConfig config)
         glfwCreateWindow(_config._tvConfig._windowWidthPixels,
                          _config._tvConfig._windowHeightPixels, "unNESassary", nullptr, nullptr);
 
-    glfwSetWindowUserPointer(_window, this);
     glfwMakeContextCurrent(_window);
-    glfwSetKeyCallback(_window, _handleKeypress);
 
     _tv.setWindow(_window);
+    _inputHandler.setWindow(_window);
+    _inputHandler.registerCallback(     //
+        GLFW_KEY_ESCAPE,                //
+        [this](ButtonState) {           //
+            _shutdownRequested = true;  //
+        }                               //
+    );                                  //
 }
 
 Application::~Application()
@@ -36,24 +43,6 @@ Application::~Application()
     glfwSetWindowShouldClose(_window, GL_TRUE);
     glfwDestroyWindow(_window);
     glfwTerminate();
-}
-
-void Application::handleKeypress(int key, int scancode, int action, int mods)
-{
-    _logger->write(LogLevel::info,
-                   fmt::format("Key Pressed ({}), scancode ({}), action ({}), mods ({})", key,
-                               scancode, action, mods));
-
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        _shutdownRequested = true;
-    }
-}
-
-void Application::_handleKeypress(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (auto thisPtr = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window))) {
-        thisPtr->handleKeypress(key, scancode, action, mods);
-    }
 }
 
 int Application::run()
@@ -84,7 +73,8 @@ bool Application::runMainLoop()
             }
         }
 
-        glfwGetCursorPos(_window, &_cursorX, &_cursorY);
+        _inputHandler.update();
+
         glfwPollEvents();
     }
 

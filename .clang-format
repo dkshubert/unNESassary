@@ -20,3 +20,4 @@ PackConstructorInitializers: Never
 ReflowComments: true
 SeparateDefinitionBlocks: Always
 BreakBeforeBraces: Linux
+AllowShortEnumsOnASingleLine: false

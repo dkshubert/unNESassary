@@ -17,7 +17,7 @@ struct ApplicationConfig {
         "../external/nes-test-roms/cpu_dummy_reads/cpu_dummy_reads.nes"
     };
 
-    LogLevel _logLevel = LogLevel::info;
+    LogLevel _logLevel = LogLevel::debug;
 
     TvConfig _tvConfig {};
 };
