@@ -36,12 +36,39 @@ class Application
     TV _tv;
     DeviceList _devices { &_nes, &_tv };
 
+    /// @brief Callback to the glfwSetKeyCallback function to handle keypresses. This function needs
+    /// to be static because GLFW provides a C-style callback API.
+    ///
+    /// @param window A pointer to the main application window.
+    /// @param key A unique ID for the key that was pressed. GLFW_KEY_<key_name> is the pattern for
+    /// GLFW keycode defines (for example, GLFW_KEY_ESCAPE).
+    /// @param scancode The system-specific scancode of the key.
+    /// @param action GLFW_PRESS, GLFW_RELEASE or GLFW_REPEAT.
+    /// @param mods Bit field describing which modifier keys were held down. An example modifier
+    /// would be GLFW_MOD_CONTROL (or GLFW_MOD_ALT, etc).
     static void _handleKeypress(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+    /// @brief Runs the main application loop. This function blocks until the application has
+    /// received a shutdown request, or until a major failure has occurred.
+    ///
+    /// @return True if the main loop exited gracefully as a result of a user application shutdown
+    /// request. This function will return false if an error caused the loop to shutdown.
+    bool runMainLoop();
 
 public:
     Application(ApplicationConfig config);
     ~Application();
 
+    /// @brief Callback to the glfwSetKeyCallback function to handle keypresses. This is the
+    /// internal implementation of the static callback of this method, that provides access to class
+    /// members.
+    ///
+    /// @param key A unique ID for the key that was pressed. GLFW_KEY_<key_name> is the pattern for
+    /// GLFW keycode defines (for example, GLFW_KEY_ESCAPE).
+    /// @param scancode The system-specific scancode of the key.
+    /// @param action GLFW_PRESS, GLFW_RELEASE or GLFW_REPEAT.
+    /// @param mods Bit field describing which modifier keys were held down. An example modifier
+    /// would be GLFW_MOD_CONTROL (or GLFW_MOD_ALT, etc).
     void handleKeypress(int key, int scancode, int action, int mods);
 
     /// @brief Runs the application. This method manages the main program loop.

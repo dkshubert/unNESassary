@@ -70,6 +70,11 @@ bool Application::run()
         return false;
     }
 
+    return runMainLoop();  // blocks until app shutdown
+}
+
+bool Application::runMainLoop()
+{
     while (!_shutdownRequested) {
         const double time { unnes::getTime() };
 
