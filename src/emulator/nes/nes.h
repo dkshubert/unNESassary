@@ -5,7 +5,7 @@
 #include "apu.h"
 #include "cartridge.h"
 #include "cpu.h"
-#include "electronic_device.h"
+#include "emulated_device.h"
 #include "ppu.h"
 #include "ram.h"
 #include "rom.h"
@@ -17,7 +17,7 @@ class Clock;
 class Logger;
 
 /// @brief The NES emulator! This class contains all NES hardware components,
-class NES : public IElectronicDevice
+class NES : public IEmulatedDevice
 {
     Logger& _logger;
     Clock _clock;
@@ -38,9 +38,6 @@ public:
     [[nodiscard]] bool insertCart(const std::string_view romPath);
     void ejectCart();
 
-    void turnOn() override;
-    void turnOff() override;
-    [[nodiscard]] bool isOn() const override;
     [[nodiscard]] bool update(double time) override;
 };
 

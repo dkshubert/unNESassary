@@ -1,6 +1,6 @@
 #pragma once
 
-#include "electronic_device.h"
+#include "emulated_device.h"
 #include "nes.h"
 #include "stdoutlogger.h"
 #include "tv_config.h"
@@ -13,7 +13,7 @@ namespace unnes
 class Logger;
 
 /// @brief Television.
-class TV : public IElectronicDevice
+class TV : public IEmulatedDevice
 {
     TvConfig _tvConfig;
     GLFWwindow* _window { nullptr };
@@ -33,9 +33,6 @@ public:
     /// @brief Renders a single scanline.
     void renderScanline(/*scanlineBuffer, row*/);
 
-    void turnOn() override;
-    void turnOff() override;
-    [[nodiscard]] bool isOn() const override;
     [[nodiscard]] bool update(double time) override;
 };
 

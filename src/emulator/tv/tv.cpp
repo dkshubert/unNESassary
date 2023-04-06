@@ -58,16 +58,4 @@ bool TV::update(double /* time */)
     return true;
 }
 
-void TV::turnOn()
-{
-    // TODO
-}
-
-void TV::turnOff()
-{
-    // TODO
-}
-
-bool TV::isOn() const { return true; }
-
 }  // namespace unnes

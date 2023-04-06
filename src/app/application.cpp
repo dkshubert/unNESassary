@@ -74,7 +74,7 @@ bool Application::run()
         const double time { unnes::getTime() };
 
         for (auto& device : _devices) {
-            if (device->isOn() && !device->update(time)) {
+            if (!device->update(time)) {
                 return false;
             }
         }

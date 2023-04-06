@@ -35,13 +35,4 @@ bool NES::insertCart(const std::string_view romPath)
 
 void NES::ejectCart() { _cartridge.release(); }
 
-void NES::turnOn()
-{
-    // no-op
-}
-
-void NES::turnOff() {}
-
-bool NES::isOn() const { return true; }
-
 }  // namespace unnes

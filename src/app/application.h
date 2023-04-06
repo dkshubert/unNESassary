@@ -15,7 +15,7 @@ namespace unnes
 class Logger;
 
 constexpr size_t kNumEmulatedDevices = 2;
-using DeviceList = std::array<IElectronicDevice*, kNumEmulatedDevices>;
+using DeviceList = std::array<IEmulatedDevice*, kNumEmulatedDevices>;
 
 /// @brief This is the main application class, used to house all objects that need to exists for the
 /// lifetime of the application (the core abstractions like the NES and TV emulators, specifically)
