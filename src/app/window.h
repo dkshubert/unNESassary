@@ -11,13 +11,12 @@ class Logger;
 /// @brief Represents the application window.
 class Window
 {
-
     GLFWwindow* _window { nullptr };  // This is a C resource. It probably makes sense to wrap this
                                       // in a unique_ptr with a custom deleter (TODO).
     Application& _application;
     Logger& _logger;
-    int _currentWidth {0};
-    int _currentHeight {0};
+    int _currentWidth { 0 };
+    int _currentHeight { 0 };
 
 public:
     Window(Application& application);

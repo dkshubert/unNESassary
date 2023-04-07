@@ -26,25 +26,15 @@ Application::Application(ApplicationConfig config)
 
 Application::~Application() { _nes.ejectCart(); }
 
-ApplicationConfig& Application::getConfig() {
-    return _config;
-}
+ApplicationConfig& Application::getConfig() { return _config; }
 
-TV& Application::getTV() {
-    return _tv;
-}
+TV& Application::getTV() { return _tv; }
 
-InputHandler& Application::getInputHandler() {
-    return _inputHandler;
-}
+InputHandler& Application::getInputHandler() { return _inputHandler; }
 
-Window& Application::getWindow() {
-    return _window;
-}
+Window& Application::getWindow() { return _window; }
 
-Logger& Application::getLogger() {
-    return *_logger;
-}
+Logger& Application::getLogger() { return *_logger; }
 
 int Application::run()
 {

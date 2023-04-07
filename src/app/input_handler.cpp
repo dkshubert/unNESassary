@@ -13,8 +13,8 @@ namespace unnes
 void _handleKeypress(GLFWwindow*, int, int, int, int);
 
 InputHandler::InputHandler(Application& application)
-    : _application(application)
-    , _logger(_application.getLogger())
+    : _application(application),
+      _logger(_application.getLogger())
 {
     glfwSetKeyCallback(_application.getWindow().getGlfwWindow(), _handleKeypress);
 }
@@ -56,6 +56,10 @@ void InputHandler::clearCallback(KeyCode keyCode)
     _callbacks.erase(keyCode);
 }
 
-void InputHandler::update() { glfwGetCursorPos(_application.getWindow().getGlfwWindow(), &_cursorPosition._x, &_cursorPosition._y); }
+void InputHandler::update()
+{
+    glfwGetCursorPos(_application.getWindow().getGlfwWindow(), &_cursorPosition._x,
+                     &_cursorPosition._y);
+}
 
 }  // namespace unnes

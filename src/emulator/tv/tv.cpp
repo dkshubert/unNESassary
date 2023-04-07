@@ -6,8 +6,8 @@
 #include <array>
 #include <cassert>
 
-#include "window.h"
 #include "logger.h"
+#include "window.h"
 
 namespace unnes
 {
@@ -44,14 +44,15 @@ void TV::incrementScanline(Color<float> color)
         glfwSwapBuffers(_window.getGlfwWindow());
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glViewport(0, 0, _window.getWidth(), _window.getHeight()); // Set the viewport to the entire window
+        glViewport(0, 0, _window.getWidth(),
+                   _window.getHeight());  // Set the viewport to the entire window
 
-        glMatrixMode(GL_PROJECTION); // Set the matrix mode to projection
-        glLoadIdentity(); // Load the identity matrix
-        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0); // Set the orthographic projection
+        glMatrixMode(GL_PROJECTION);               // Set the matrix mode to projection
+        glLoadIdentity();                          // Load the identity matrix
+        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);  // Set the orthographic projection
 
-        glMatrixMode(GL_MODELVIEW); // Set the matrix mode to modelview
-        glLoadIdentity(); // Load the identity matrix
+        glMatrixMode(GL_MODELVIEW);  // Set the matrix mode to modelview
+        glLoadIdentity();            // Load the identity matrix
 
         glBegin(GL_TRIANGLE_STRIP);
     }
