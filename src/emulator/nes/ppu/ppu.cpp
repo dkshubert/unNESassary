@@ -3,12 +3,14 @@
 #include <fmt/core.h>
 
 #include "logger.h"
+#include "tv.h"
 
 namespace unnes
 {
 
-PPU::PPU(Logger& logger)
-    : _logger(logger)
+PPU::PPU(TV& tv, Logger& logger)
+    : _tv(tv),
+    _logger(logger)
 {
 }
 

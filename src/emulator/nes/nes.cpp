@@ -5,15 +5,16 @@
 #include "cartridge/cartridge.h"
 #include "clock.h"
 #include "logger.h"
+#include "tv.h"
 
 namespace unnes
 {
 
-NES::NES(Logger& logger)
+NES::NES(TV& tv, Logger& logger)
     : _logger(logger),
       _clock(_logger),
       _cpu(_logger),
-      _ppu(_logger),
+      _ppu(tv, _logger),
       _apu(_logger),
       _ram(_logger),
       _rom(_logger)

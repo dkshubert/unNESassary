@@ -33,9 +33,9 @@ class Application
     InputHandler _inputHandler;
 
     // Emulated Devices
-    NES _nes;
     TV _tv;
-    DeviceList _devices { &_nes, &_tv };
+    NES _nes;
+    DeviceList _devices { &_tv, &_nes };
 
     /// @brief Runs the main application loop. This function blocks until the application has
     /// received a shutdown request, or until a major failure has occurred.

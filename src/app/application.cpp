@@ -13,8 +13,8 @@ Application::Application(ApplicationConfig config)
       _logger(std::make_unique<stdout_logger>(_config._logLevel)),
       _window(*this),
       _inputHandler(*this),
-      _nes(*_logger),
-      _tv(_window, *_logger)
+      _tv(_window, *_logger),
+      _nes(_tv, *_logger)
 {
     _inputHandler.registerCallback(     //
         GLFW_KEY_ESCAPE,                //

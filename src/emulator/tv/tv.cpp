@@ -73,9 +73,9 @@ bool TV::update(double time)
 
     const std::uint16_t numPixelsToRender { 61440 };
     for (std::uint16_t i { 0 }; i < numPixelsToRender; i++) {
-        incrementScanline({ ._r = (i / numPixelsToRender) / 2.0f + _currentScanlineRow / 240.0f,
+        incrementScanline({ ._r = (i / numPixelsToRender) / 2.0f + static_cast<float>(_currentScanlineRow) / screen::kHeightPixels,
                             ._g = (i / numPixelsToRender) / 2.0f - _currentScanlineColumn / 256.0f,
-                            ._b = (i / numPixelsToRender) / 2.0f - _currentScanlineRow / 240.0f });
+                            ._b = (i / numPixelsToRender) / 2.0f - static_cast<float>(_currentScanlineRow) / screen::kHeightPixels });
     }
 
     _previousTime = time;

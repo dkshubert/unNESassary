@@ -15,6 +15,7 @@ namespace unnes
 
 class Clock;
 class Logger;
+class TV;
 
 /// @brief The NES emulator! This class contains all NES hardware components,
 class NES : public IEmulatedDevice
@@ -29,7 +30,7 @@ class NES : public IEmulatedDevice
     std::unique_ptr<Cartridge> _cartridge { nullptr };
 
 public:
-    NES(Logger& logger);
+    NES(TV& tv, Logger& logger);
 
     /// @brief Inserts a cartridge into the NES.
     ///
