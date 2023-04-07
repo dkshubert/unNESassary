@@ -44,15 +44,16 @@ void TV::incrementScanline(Color<float> color)
         glfwSwapBuffers(_window.getGlfwWindow());
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glViewport(0, 0, _window.getWidth(),
-                   _window.getHeight());  // Set the viewport to the entire window
 
-        glMatrixMode(GL_PROJECTION);               // Set the matrix mode to projection
-        glLoadIdentity();                          // Load the identity matrix
-        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);  // Set the orthographic projection
+        // Set the viewport to the entire window
+        glViewport(0, 0, _window.getWidth(), _window.getHeight());
 
-        glMatrixMode(GL_MODELVIEW);  // Set the matrix mode to modelview
-        glLoadIdentity();            // Load the identity matrix
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
         glBegin(GL_TRIANGLE_STRIP);
     }
