@@ -44,11 +44,6 @@ int Application::run()
         return kExitFailure;
     }
 
-    return runMainLoop() ? kExitSuccess : kExitFailure;  // blocks until app shutdown
-}
-
-bool Application::runMainLoop()
-{
     while (!_shutdownRequested) {
         const double time { unnes::getTime() };
 
@@ -68,7 +63,7 @@ bool Application::runMainLoop()
         }
     }
 
-    return true;
+    return kExitSuccess;
 }
 
 }  // namespace unnes

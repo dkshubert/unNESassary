@@ -37,13 +37,6 @@ class Application
     NES _nes;
     DeviceList _devices { &_tv, &_nes };
 
-    /// @brief Runs the main application loop. This function blocks until the application has
-    /// received a shutdown request, or until a major failure has occurred.
-    ///
-    /// @return True if the main loop exited gracefully as a result of a user application shutdown
-    /// request. This function will return false if an error caused the loop to shutdown.
-    [[nodiscard]] bool runMainLoop();
-
 public:
     Application(ApplicationConfig config);
     ~Application();

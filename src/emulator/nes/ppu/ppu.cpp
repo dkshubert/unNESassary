@@ -10,7 +10,7 @@ namespace unnes
 
 PPU::PPU(TV& tv, Logger& logger)
     : _tv(tv),
-    _logger(logger)
+      _logger(logger)
 {
 }
 

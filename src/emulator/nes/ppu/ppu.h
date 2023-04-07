@@ -10,8 +10,8 @@ class TV;
 
 class PPU : public IClockedDevice
 {
-    Logger& _logger;
     TV& _tv;
+    Logger& _logger;
 
 public:
     PPU(TV& tv, Logger& logger);
