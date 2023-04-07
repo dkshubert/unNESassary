@@ -11,7 +11,7 @@ struct TvConfig {
     // Note : These width/height fields are signed because glfwCreateWindow takes signed values.
     // Pretty weird, IMO, but keeping consistent types here prevents a cast later on, ¯\_(ツ)_/¯
     std::int32_t _windowWidthPixels { 1024 };
-    std::int32_t _windowHeightPixels { 768 };
+    std::int32_t _windowHeightPixels { 960 };
 };
 
 }  // namespace unnes

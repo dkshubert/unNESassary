@@ -9,6 +9,7 @@
 #include "nes.h"
 #include "time_utils.h"
 #include "tv.h"
+#include "window.h"
 
 namespace unnes
 {
@@ -24,18 +25,14 @@ using DeviceList = std::array<IEmulatedDevice*, kNumEmulatedDevices>;
 /// lifetime of the application (the core abstractions like the NES and TV emulators, specifically)
 class Application
 {
-    // Application management members
     ApplicationConfig _config;
-    GLFWwindow* _window { nullptr };  // This is a C resource. It probably makes sense to wrap this
-                                      // in a unique_ptr with a custom deleter (TODO).
     std::unique_ptr<Logger> _logger { nullptr };
     bool _shutdownRequested { false };
     InputHandler _inputHandler;
-
-    // The emulated device list
     NES _nes;
     TV _tv;
     DeviceList _devices { &_nes, &_tv };
+    Window _window;
 
     /// @brief Runs the main application loop. This function blocks until the application has
     /// received a shutdown request, or until a major failure has occurred.

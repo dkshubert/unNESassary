@@ -1,5 +1,6 @@
 #include "tv.h"
 
+#include <fmt/core.h>
 #include <GLFW/glfw3.h>
 
 #include <array>
@@ -10,7 +11,7 @@
 namespace unnes
 {
 
-TV::TV(TvConfig tvConfig, Logger& logger)
+TV::TV(TvConfig& tvConfig, Logger& logger)
     : _config(tvConfig),
       _logger(logger)
 {
@@ -23,29 +24,27 @@ void TV::setWindow(GLFWwindow* window)
     _window = window;
 }
 
-constexpr float getPixelWidth() { return 2.0f / screen::kWidthPixels; }
+float TV::getPixelWidth() const { return 2.0f / screen::kWidthPixels; }
 
-void TV::renderScanline(ScanlineBuffer buffer)
+float TV::getPixelHeight() const { return 2.0f / screen::kHeightPixels; }
+
+void TV::incrementScanline(Color<float> color)
 {
-    const float y { 1.0f - getPixelWidth() * _currentScanlineRow };
-
-    // TODO (2): It probably makes sense to wrap all the gl functions to make it really easy to draw
-    // a horizontal sequence of pixels, so that they're not used directly in this class. Maybe some
-    // kind of IScanLineRenderer interface can be used, and the implementation can be swapped out,
-    // with a GLScanlineRenderer, and possibly even a BashScanlineRenderer, or something fun like
-    // that...
+    const float x { -1.0f + getPixelWidth() * _currentScanlineColumn };
+    const float y { 1.0f - getPixelHeight() * _currentScanlineRow };
 
     // Draw a test image a this point in the project. Later on we'll obviously really draw an image
     // obtained from the NES.
-    for (std::uint16_t i { 0 }; i < screen::kWidthPixels; i++) {
-        const float x { -1.0f + getPixelWidth() * i };
+    renderPixel({ ._x = x, ._y = y }, color);  // TODO: construct the right color value here
 
-        // TODO: populate color value from buffer
-        renderPixel({ ._x = x, ._y = y }, buffer[i]);
+    _currentScanlineColumn++;
+    if (_currentScanlineColumn == screen::kWidthPixels) {
+        _currentScanlineColumn = 0;
+        _currentScanlineRow++;
     }
 
-    _currentScanlineRow++;
     if (_currentScanlineRow == screen::kHeightPixels) {
+        // Swap buffers when an entire screen's worth of pixels has been drawn
         _currentScanlineRow = 0;
         glfwSwapBuffers(_window);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -55,13 +54,13 @@ void TV::renderScanline(ScanlineBuffer buffer)
     }
 }
 
-void TV::renderPixel(Point<float> coords, std::uint8_t color)
+void TV::renderPixel(Point<float> coords, Color<float> color)
 {
-    glColor3f(color, color, color);
-    glVertex2f(coords._x, coords._y);                                      // upper left
-    glVertex2f(coords._x + getPixelWidth(), coords._y);                    // upper right
-    glVertex2f(coords._x, coords._y - getPixelWidth());                    // lower left
-    glVertex2f(coords._x + getPixelWidth(), coords._y - getPixelWidth());  // lower right
+    glColor3f(color._r, color._g, color._b);
+    glVertex2f(coords._x, coords._y);                                       // upper left
+    glVertex2f(coords._x + getPixelWidth(), coords._y);                     // upper right
+    glVertex2f(coords._x, coords._y - getPixelHeight());                    // lower left
+    glVertex2f(coords._x + getPixelWidth(), coords._y - getPixelHeight());  // lower right
 }
 
 std::uint16_t TV::calculateNumScanlinesToRender(double time) const
@@ -73,13 +72,15 @@ std::uint16_t TV::calculateNumScanlinesToRender(double time) const
 
 bool TV::update(double time)
 {
-    const std::uint16_t numScanlinesToRender { calculateNumScanlinesToRender(time) };
+    // TODO : pretty sure this is all trash. I think the PPU will take a reference to the TV, and
+    // call incrementScanline. const std::uint16_t numScanlinesToRender {
+    // calculateNumScanlinesToRender(time) };
 
-    // TODO: Actually populate this buffer from the PPU
-    std::array<std::uint8_t, screen::kWidthPixels> dummyScanlineBuffer;
-
-    for (std::uint16_t i { 0 }; i < numScanlinesToRender; i++) {
-        renderScanline(dummyScanlineBuffer);
+    const std::uint16_t numPixelsToRender { 61440 };
+    for (std::uint16_t i { 0 }; i < numPixelsToRender; i++) {
+        incrementScanline({ ._r = (i / numPixelsToRender) / 2.0f + _currentScanlineRow / 240.0f,
+                            ._g = (i / numPixelsToRender) / 2.0f - _currentScanlineColumn / 256.0f,
+                            ._b = (i / numPixelsToRender) / 2.0f - _currentScanlineRow / 240.0f });
     }
 
     _previousTime = time;

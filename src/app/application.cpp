@@ -1,7 +1,5 @@
 #include "application.h"
 
-#include <GLFW/glfw3.h>
-
 #include "stdout_logger.h"
 #include "time_utils.h"
 
@@ -15,19 +13,9 @@ Application::Application(ApplicationConfig config)
       _logger(std::make_unique<stdout_logger>(_config._logLevel)),
       _inputHandler(*_logger),
       _nes(*_logger),
-      _tv(config._tvConfig, *_logger)
+      _tv(config._tvConfig, *_logger),
+      _window(_config, _tv, _inputHandler)
 {
-    glfwInit();
-
-    // Needs to be called after glfwInit().
-    _window =
-        glfwCreateWindow(_config._tvConfig._windowWidthPixels,
-                         _config._tvConfig._windowHeightPixels, "unNESassary", nullptr, nullptr);
-
-    glfwMakeContextCurrent(_window);
-
-    _tv.setWindow(_window);
-    _inputHandler.setWindow(_window);
     _inputHandler.registerCallback(     //
         GLFW_KEY_ESCAPE,                //
         [this](ButtonState) {           //
@@ -36,22 +24,10 @@ Application::Application(ApplicationConfig config)
     );                                  //
 }
 
-Application::~Application()
-{
-    _nes.ejectCart();
-    glfwSetWindowShouldClose(_window, GL_TRUE);
-    glfwDestroyWindow(_window);
-    glfwTerminate();
-}
+Application::~Application() { _nes.ejectCart(); }
 
 int Application::run()
 {
-    if (!_window) {
-        _logger->write(LogLevel::error, "Failed to create an application window.");
-
-        return kExitFailure;
-    }
-
     if (!_nes.insertCart(_config._lastPlayedRomPath)) {
         _logger->write(LogLevel::error, "Failed to insert cartridge.");
 
@@ -70,13 +46,16 @@ bool Application::runMainLoop()
             if (!device->update(time)) {
                 _logger->write(LogLevel::error,
                                "Emulated device failed to update. Exiting main loop.");
-                return false;
+                _shutdownRequested = true;
             }
         }
 
         _inputHandler.update();
 
-        glfwPollEvents();
+        if (!_window.update()) {
+            _logger->write(LogLevel::error, "The window has closed.");
+            _shutdownRequested = true;
+        }
     }
 
     return true;
