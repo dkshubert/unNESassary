@@ -13,6 +13,7 @@ class GLFWwindow;
 namespace unnes
 {
 
+class Application;
 class Logger;
 
 enum class ButtonState {
@@ -32,13 +33,13 @@ using KeyboardCallback = std::function<void(ButtonState)>;
 class InputHandler
 {
     Point<double> _cursorPosition { ._x = 0, ._y = 0 };
-    GLFWwindow* _window { nullptr };
     std::map<KeyCode, KeyboardCallback> _callbacks {};
 
+    Application& _application;
     Logger& _logger;
 
 public:
-    InputHandler(Logger& logger);
+    InputHandler(Application& application);
     ~InputHandler() = default;
 
     /// @brief Callback to the glfwSetKeyCallback function to handle keypresses. This function needs
@@ -57,11 +58,6 @@ public:
     ///
     /// @return The current mouse coordinates.
     [[nodiscard]] Point<double> getMouseCoordinates();
-
-    /// @brief Sets the GLFW window
-    ///
-    /// @param window A pointer to the application's GLFW window.
-    void setWindow(GLFWwindow* window);
 
     /// @brief Registers a callback that will be invoked when the provided keyCode is pressed. The
     /// callback contains a ButtonState value to indicate whether the key was pressed, release, or

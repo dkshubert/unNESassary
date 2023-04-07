@@ -4,6 +4,7 @@
 
 #include <cassert>
 
+#include "application.h"
 #include "logger.h"
 
 namespace unnes
@@ -11,26 +12,17 @@ namespace unnes
 
 void _handleKeypress(GLFWwindow*, int, int, int, int);
 
-InputHandler::InputHandler(Logger& logger)
-    : _logger(logger)
+InputHandler::InputHandler(Application& application)
+    : _application(application)
+    , _logger(_application.getLogger())
 {
-}
-
-void InputHandler::setWindow(GLFWwindow* window)
-{
-    assert(window);
-
-    _window = window;
-    glfwSetWindowUserPointer(_window, this);
-    glfwSetKeyCallback(_window, _handleKeypress);
-
-    _logger.write(LogLevel::debug, "GLFW window set.");
+    glfwSetKeyCallback(_application.getWindow().getGlfwWindow(), _handleKeypress);
 }
 
 void _handleKeypress(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (auto thisPtr = reinterpret_cast<InputHandler*>(glfwGetWindowUserPointer(window))) {
-        thisPtr->handleKeypress(key, scancode, action, mods);
+    if (auto applicationPtr = reinterpret_cast<Application*>(glfwGetWindowUserPointer(window))) {
+        applicationPtr->getInputHandler().handleKeypress(key, scancode, action, mods);
     }
 }
 
@@ -64,6 +56,6 @@ void InputHandler::clearCallback(KeyCode keyCode)
     _callbacks.erase(keyCode);
 }
 
-void InputHandler::update() { glfwGetCursorPos(_window, &_cursorPosition._x, &_cursorPosition._y); }
+void InputHandler::update() { glfwGetCursorPos(_application.getWindow().getGlfwWindow(), &_cursorPosition._x, &_cursorPosition._y); }
 
 }  // namespace unnes

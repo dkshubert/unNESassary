@@ -6,27 +6,21 @@
 #include <array>
 #include <cassert>
 
+#include "window.h"
 #include "logger.h"
 
 namespace unnes
 {
 
-TV::TV(TvConfig& tvConfig, Logger& logger)
-    : _config(tvConfig),
+TV::TV(Window& window, Logger& logger)
+    : _window(window),
       _logger(logger)
 {
 }
 
-void TV::setWindow(GLFWwindow* window)
-{
-    assert(window);
+constexpr float getPixelWidth() { return 2.0f / screen::kWidthPixels; }
 
-    _window = window;
-}
-
-float TV::getPixelWidth() const { return 2.0f / screen::kWidthPixels; }
-
-float TV::getPixelHeight() const { return 2.0f / screen::kHeightPixels; }
+constexpr float getPixelHeight() { return 2.0f / screen::kHeightPixels; }
 
 void TV::incrementScanline(Color<float> color)
 {
@@ -46,10 +40,19 @@ void TV::incrementScanline(Color<float> color)
     if (_currentScanlineRow == screen::kHeightPixels) {
         // Swap buffers when an entire screen's worth of pixels has been drawn
         _currentScanlineRow = 0;
-        glfwSwapBuffers(_window);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         glEnd();
+        glfwSwapBuffers(_window.getGlfwWindow());
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glViewport(0, 0, _window.getWidth(), _window.getHeight()); // Set the viewport to the entire window
+
+        glMatrixMode(GL_PROJECTION); // Set the matrix mode to projection
+        glLoadIdentity(); // Load the identity matrix
+        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0); // Set the orthographic projection
+
+        glMatrixMode(GL_MODELVIEW); // Set the matrix mode to modelview
+        glLoadIdentity(); // Load the identity matrix
+
         glBegin(GL_TRIANGLE_STRIP);
     }
 }
@@ -63,18 +66,9 @@ void TV::renderPixel(Point<float> coords, Color<float> color)
     glVertex2f(coords._x + getPixelWidth(), coords._y - getPixelHeight());  // lower right
 }
 
-std::uint16_t TV::calculateNumScanlinesToRender(double time) const
-{
-    const double timeDelta { time - _previousTime };
-
-    return _config._refreshRateHz * timeDelta * screen::kHeightPixels;
-}
-
 bool TV::update(double time)
 {
-    // TODO : pretty sure this is all trash. I think the PPU will take a reference to the TV, and
-    // call incrementScanline. const std::uint16_t numScanlinesToRender {
-    // calculateNumScanlinesToRender(time) };
+    // TODO : this is all test code
 
     const std::uint16_t numPixelsToRender { 61440 };
     for (std::uint16_t i { 0 }; i < numPixelsToRender; i++) {

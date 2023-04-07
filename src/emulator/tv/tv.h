@@ -7,14 +7,15 @@
 #include "logger.h"
 #include "nes_constants.h"
 #include "point.h"
-#include "tv_config.h"
 
 class GLFWwindow;
 
 namespace unnes
 {
 
+class ApplicationConfig;
 class Logger;
+class Window;
 
 using ScanlineBuffer = std::span<std::uint8_t, screen::kWidthPixels>;
 
@@ -22,8 +23,7 @@ using ScanlineBuffer = std::span<std::uint8_t, screen::kWidthPixels>;
 /// pixels.
 class TV : public IEmulatedDevice
 {
-    TvConfig& _config;
-    GLFWwindow* _window { nullptr };
+    Window& _window;
     Logger& _logger;
 
     // Rendering details
@@ -31,26 +31,9 @@ class TV : public IEmulatedDevice
     std::uint16_t _currentScanlineRow { 0 };
     std::uint16_t _currentScanlineColumn { 0 };
 
-    /// @brief Calculates the number of scanlines to render since the last call to TV::update.
-    ///
-    /// @param time The time since application start, in seconds.
-    ///
-    /// @return The total number of scanlines that need to be drawn.
-    std::uint16_t calculateNumScanlinesToRender(double time) const;
-
 public:
-    TV(TvConfig& tvConfig, Logger& logger);
+    TV(Window& window, Logger& logger);
     ~TV() = default;
-
-    /// @brief Sets the GLFW window
-    ///
-    /// @todo This method will probably get deleted when a rudimentary graphics lib is implemented.
-    ///
-    /// @param window A pointer to the application's GLFW window.
-    void setWindow(GLFWwindow* window);
-
-    float getPixelWidth() const;
-    float getPixelHeight() const;
 
     /// @brief Plots the next pixel on the current scanline, or starts a new scanline if the end of
     /// the current scanline has been reached.

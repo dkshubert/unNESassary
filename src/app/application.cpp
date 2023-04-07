@@ -11,10 +11,10 @@ Application::Application(ApplicationConfig config)
       // TODO: choose the type of logger to construct based on the application config, via some
       // logger factory function.
       _logger(std::make_unique<stdout_logger>(_config._logLevel)),
-      _inputHandler(*_logger),
+      _window(*this),
+      _inputHandler(*this),
       _nes(*_logger),
-      _tv(config._tvConfig, *_logger),
-      _window(_config, _tv, _inputHandler)
+      _tv(_window, *_logger)
 {
     _inputHandler.registerCallback(     //
         GLFW_KEY_ESCAPE,                //
@@ -25,6 +25,26 @@ Application::Application(ApplicationConfig config)
 }
 
 Application::~Application() { _nes.ejectCart(); }
+
+ApplicationConfig& Application::getConfig() {
+    return _config;
+}
+
+TV& Application::getTV() {
+    return _tv;
+}
+
+InputHandler& Application::getInputHandler() {
+    return _inputHandler;
+}
+
+Window& Application::getWindow() {
+    return _window;
+}
+
+Logger& Application::getLogger() {
+    return *_logger;
+}
 
 int Application::run()
 {

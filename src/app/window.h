@@ -5,23 +5,28 @@ class GLFWwindow;
 namespace unnes
 {
 
-class ApplicationConfig;
-class TV;
-class InputHandler;
+class Application;
+class Logger;
 
 /// @brief Represents the application window.
 class Window
 {
+
     GLFWwindow* _window { nullptr };  // This is a C resource. It probably makes sense to wrap this
                                       // in a unique_ptr with a custom deleter (TODO).
-    ApplicationConfig& _config;
-    TV& _tv;
-    InputHandler& _inputHandler;
+    Application& _application;
+    Logger& _logger;
+    int _currentWidth {0};
+    int _currentHeight {0};
 
 public:
-    Window(ApplicationConfig& config, TV& tv, InputHandler& inputHandler);
+    Window(Application& application);
     ~Window();
 
+    GLFWwindow* getGlfwWindow();
+    int getWidth() const;
+    int getHeight() const;
+    void handleResize(int width, int height);
     bool update();
 };
 

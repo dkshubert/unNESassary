@@ -25,14 +25,17 @@ using DeviceList = std::array<IEmulatedDevice*, kNumEmulatedDevices>;
 /// lifetime of the application (the core abstractions like the NES and TV emulators, specifically)
 class Application
 {
+    // Application Management
     ApplicationConfig _config;
     std::unique_ptr<Logger> _logger { nullptr };
     bool _shutdownRequested { false };
+    Window _window;
     InputHandler _inputHandler;
+
+    // Emulated Devices
     NES _nes;
     TV _tv;
     DeviceList _devices { &_nes, &_tv };
-    Window _window;
 
     /// @brief Runs the main application loop. This function blocks until the application has
     /// received a shutdown request, or until a major failure has occurred.
@@ -44,6 +47,12 @@ class Application
 public:
     Application(ApplicationConfig config);
     ~Application();
+
+    ApplicationConfig& getConfig();
+    TV& getTV();
+    InputHandler& getInputHandler();
+    Window& getWindow();
+    Logger& getLogger();
 
     /// @brief Runs the application. This method manages the main program loop.
     ///
