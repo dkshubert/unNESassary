@@ -13,7 +13,6 @@ class GLFWwindow;
 namespace unnes
 {
 
-class ApplicationConfig;
 class Logger;
 class Window;
 
