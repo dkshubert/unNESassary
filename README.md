@@ -14,18 +14,19 @@ The following system dependencies are currently required to build this project:
 
 If you can run `docker run hello-world` and you see the expected `Hello from Docker!` output, you should be ready to build!
 
-**NOTE:** Currently I'm only using GNU tools and testing on Linux, though I plan on making it easier to build for other platforms. I'm not writing any platform specific code; GLFW is doing most of the hard work in this department, as it's doing the grunt work of creating windows and drawing graphics, all safely tucked behind generic abstractions.
+**NOTE:** Currently I'm only using GNU tools and testing on Linux and Windows Subsystem for Linux 2 (WSL2), though I plan on making it easier to build for other platforms. I'm not writing any platform specific code; GLFW is doing most of the hard work in this department, as it's doing the grunt work of creating windows and drawing graphics, all safely tucked behind generic abstractions.
 
 ## Building
 
-There's a bunch of helper scripts in the [tools](./tools) directory to assist in building, formatting, documentation generation, etc. `build.sh` is a good one to run a quick, incremental build (assuming you have the above list of requirements installed).
+There's a bunch of helper scripts in the [tools](./tools) directory to assist in building, formatting, documentation generation, etc. `build.sh` is a good one to run a quick, incremental build.
 
 ```bash
 ./tools/build.sh
 ```
 
 ## General Design Philosophy
-I'm happy to receive feedback or make any change that furthers at least one of the following goals:
+
+These are my primary concerns when making any change to this project:
 
 - Emulation fidelity will be improved.
 - Performance will be improved, at no cost to emulation fidelity.
@@ -38,6 +39,8 @@ I'm happy to receive feedback or make any change that furthers at least one of t
 - The C++ Core Guidelines suggests an alternative approach.
 - Code can be simplified, keeping with the conditions above.
 - Code readability/understandability can be increased, keeping with the conditions above.
+
+Any feedback that furthers any of the above goals is appreciated!
 
 ## Current Project Status
 
