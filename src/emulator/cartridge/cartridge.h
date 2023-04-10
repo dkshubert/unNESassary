@@ -7,6 +7,7 @@ namespace unnes
 {
 
 class Logger;
+class Header;
 
 /// @brief Represents a game (or test) NES cartridge, which is loaded from an ".nes" ROM from the
 /// filesystem.
@@ -14,6 +15,10 @@ class Cartridge
 {
     Logger& _logger;
     std::string _romPath;
+    size_t _prgRomSizeKb { 0 };
+    size_t _chrRomSizeKb { 0 };
+
+    bool headerIsValid(const Header& header);
 
 public:
     Cartridge(Logger& logger);
