@@ -27,9 +27,7 @@ void TV::incrementScanline(Color<float> color)
     const float x { -1.0f + getPixelWidth() * _currentScanlineColumn };
     const float y { 1.0f - getPixelHeight() * _currentScanlineRow };
 
-    // Draw a test image a this point in the project. Later on we'll obviously really draw an image
-    // obtained from the NES.
-    renderPixel({ ._x = x, ._y = y }, color);  // TODO: construct the right color value here
+    renderPixel({ ._x = x, ._y = y }, color);
 
     _currentScanlineColumn++;
     if (_currentScanlineColumn == screen::kWidthPixels) {
@@ -40,47 +38,45 @@ void TV::incrementScanline(Color<float> color)
     if (_currentScanlineRow == screen::kHeightPixels) {
         // Swap buffers when an entire screen's worth of pixels has been drawn
         _currentScanlineRow = 0;
-        glEnd();
-        glfwSwapBuffers(_window.getGlfwWindow());
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // Set the viewport to the entire window
-        glViewport(0, 0, _window.getWidth(), _window.getHeight());
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glBegin(GL_TRIANGLE_STRIP);
+        flushGraphics();
     }
+}
+
+void TV::flushGraphics()
+{
+    _currentScanlineRow = 0;
+    _currentScanlineColumn = 0;
+
+    glfwSwapBuffers(_window.getGlfwWindow());
+
+    // glClear(GL_COLOR_BUFFER_BIT);
+
+    // Set the viewport to the entire window
+    glViewport(0, 0, _window.getWidth(), _window.getHeight());
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 void TV::renderPixel(Point<float> coords, Color<float> color)
 {
+    glBegin(GL_TRIANGLE_STRIP);
     glColor3f(color._r, color._g, color._b);
     glVertex2f(coords._x, coords._y);                                       // upper left
     glVertex2f(coords._x + getPixelWidth(), coords._y);                     // upper right
     glVertex2f(coords._x, coords._y - getPixelHeight());                    // lower left
     glVertex2f(coords._x + getPixelWidth(), coords._y - getPixelHeight());  // lower right
+    glEnd();
 }
 
 bool TV::update(double time)
 {
-    // TODO : this is all test code
-
-    const std::uint16_t numPixelsToRender { 61440 };
-    for (std::uint16_t i { 0 }; i < numPixelsToRender; i++) {
-        incrementScanline(
-            { ._r = (i / numPixelsToRender) / 2.0f +
-                    static_cast<float>(_currentScanlineRow) / screen::kHeightPixels,
-              ._g = (i / numPixelsToRender) / 2.0f - _currentScanlineColumn / 256.0f,
-              ._b = (i / numPixelsToRender) / 2.0f -
-                    static_cast<float>(_currentScanlineRow) / screen::kHeightPixels });
-    }
+    // TODO : delete this function?
 
     _previousTime = time;
 

@@ -1,4 +1,5 @@
 # unNESassary
+
 Yet another NES emulator, using modern C++. This is a project started purely for fun, with the aim of crossing off two childhood/teenage dreams from my bucket list:
 
 - Writing an emulator

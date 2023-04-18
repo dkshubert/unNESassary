@@ -34,6 +34,9 @@ public:
     TV(Window& window, Logger& logger);
     ~TV() = default;
 
+    /// @todo remove this helper
+    void flushGraphics();
+
     /// @brief Plots the next pixel on the current scanline, or starts a new scanline if the end of
     /// the current scanline has been reached.
     ///

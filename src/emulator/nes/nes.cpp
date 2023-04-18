@@ -29,9 +29,15 @@ bool NES::update(double time) { return _clock.run(time); }
 bool NES::insertCart(const std::string_view romPath)
 {
     _cartridge = std::make_unique<Cartridge>(_logger);
-    return _cartridge->load(romPath);
+    if (!_cartridge->load(romPath)) {
+        return false;
+    }
+
+    _ppu.connectCartridge(_cartridge.get());
+
+    return true;
 }
 
-void NES::ejectCart() { _cartridge.release(); }
+void NES::ejectCart() { _cartridge.reset(); }
 
 }  // namespace unnes

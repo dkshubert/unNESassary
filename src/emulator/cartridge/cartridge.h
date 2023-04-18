@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace unnes
 {
@@ -15,8 +17,9 @@ class Cartridge
 {
     Logger& _logger;
     std::string _romPath;
-    size_t _prgRomSizeKb { 0 };
-    size_t _chrRomSizeKb { 0 };
+    bool _mirroring { false };
+    std::vector<std::uint8_t> _prgRom;
+    std::vector<std::uint8_t> _chrRom;
 
     bool headerIsValid(const Header& header);
 
@@ -29,7 +32,10 @@ public:
     /// @returns True if the ROM loaded successfully, false otherwise.
     [[nodiscard]] bool load(const std::string_view romPath);
 
-    /// @brief Enables debugging
+    std::vector<std::uint8_t>& getPrgRom();
+    std::vector<std::uint8_t>& getChrRom();
+
+    /// @brief Does nothing.
     void furiouslyBlowOutDust();
 };
 
