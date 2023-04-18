@@ -15,8 +15,13 @@ namespace unnes
 namespace test
 {
 
-/// TODO : use a span
+/// TODO : use spans for these
+
+void renderTileScanline(std::uint8_t* chrom, TV& tv, Logger& logger);
+
 void renderTile(std::uint8_t* chrom, TV& tv, Logger& logger);
+
+void renderTilesheet(std::uint8_t* chrom, TV& tv, Logger& logger);
 
 }  // namespace test
 
@@ -31,12 +36,8 @@ void PPU::connectCartridge(Cartridge* cartridge)
     assert(cartridge);
     _cartridge = cartridge;
 
-    // TODO : delete this test code that loops through the sprite sheet and displays each tile, one
-    // by one
-    for (int i = 0; i < 20; i++) {
-        test::renderTile(_cartridge->getChrRom().data() + 16 * i, _tv, _logger);
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    }
+    // TODO : delete this test code
+    test::renderTilesheet(_cartridge->getChrRom().data(), _tv, _logger);
 }
 
 bool PPU::handleClockTick(std::uint64_t tickNum)
@@ -48,25 +49,44 @@ bool PPU::handleClockTick(std::uint64_t tickNum)
     return true;
 }
 
+void test::renderTileScanline(std::uint8_t* chrom, TV& tv, Logger& logger)
+{
+    const std::uint8_t left = chrom[0];
+    const std::uint8_t right = chrom[8];
+
+    for (size_t pixelIndex = 0; pixelIndex < 8; pixelIndex++) {
+        const std::uint8_t mask = 0b10000000 >> pixelIndex;
+
+        // clang-format off
+        const int pixel {
+            ( ( ( mask & left ) << 1 ) | ( ( mask & right ) ) ) >> (7 - pixelIndex)
+        };
+        // clang-format on
+
+        logger.write(LogLevel::trace,
+                        fmt::format("left: {}, right: {}, pixel: {}", left, right, pixel));
+        const float f { static_cast<int>(pixel) / 3.0f };
+        tv.incrementScanline({ ._r = f, ._g = f, ._b = f });
+    }
+}
+
 void test::renderTile(std::uint8_t* chrom, TV& tv, Logger& logger)
 {
     for (size_t byteIndex = 0; byteIndex < 8; byteIndex++) {
-        const std::uint8_t left = chrom[byteIndex];
-        const std::uint8_t right = chrom[8 + byteIndex];
+        renderTileScanline(chrom + byteIndex, tv, logger);
+    }
 
-        for (size_t pixelIndex = 0; pixelIndex < 8; pixelIndex++) {
-            const std::uint8_t mask = 0b10000000 >> pixelIndex;
+    tv.flushGraphics();
+}
 
-            // clang-format off
-            const int pixel {
-                ( ( ( mask & left ) << 1 ) | ( ( mask & right ) ) ) >> (7 - pixelIndex)
-            };
-            // clang-format on
-
-            logger.write(LogLevel::trace,
-                         fmt::format("left: {}, right: {}, pixel: {}", left, right, pixel));
-            const float f { static_cast<int>(pixel) / 3.0f };
-            tv.incrementScanline({ ._r = f, ._g = f, ._b = f });
+void test::renderTilesheet(std::uint8_t* chrom, TV& tv, Logger& logger)
+{
+    for (int tileRow = 0; tileRow < 30; tileRow++) {
+        for (int pixelRow = 0; pixelRow < 8; pixelRow++) {
+            for (size_t pixelColumn = 0; pixelColumn < 32; pixelColumn++) {
+                renderTileScanline(chrom + tileRow * 16 * 32 + pixelColumn * 16 + pixelRow, tv, logger);
+            }
+            // tv.forceNextScanline();
         }
     }
 

@@ -42,6 +42,8 @@ public:
     ///
     void incrementScanline(Color<float> color);
 
+    void forceNextScanline();
+
     /// @brief Renders a single pixel, at any given screen coordinate. The coordinate system spans
     /// from (-1,-1) top-left, to (1,1) bottom-right, inherited from GLFW.
     ///

@@ -35,12 +35,18 @@ void TV::incrementScanline(Color<float> color)
         _currentScanlineRow++;
     }
 
-    if (_currentScanlineRow == screen::kHeightPixels) {
+    if (_currentScanlineRow >= screen::kHeightPixels) {
         // Swap buffers when an entire screen's worth of pixels has been drawn
         _currentScanlineRow = 0;
 
         flushGraphics();
     }
+}
+
+void TV::forceNextScanline()
+{
+    _currentScanlineColumn = 0;
+    _currentScanlineRow++;
 }
 
 void TV::flushGraphics()
