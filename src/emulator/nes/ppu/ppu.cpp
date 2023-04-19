@@ -84,7 +84,6 @@ void test::renderTilesheet(std::span<std::byte> chrom, TV& tv, Logger& logger)
             for (size_t pixelColumn { 0 }; pixelColumn < 32; pixelColumn++) {
                 renderTileScanline(chrom.subspan(tileRow * 16 * 32 + pixelColumn * 16 + pixelRow), tv, logger);
             }
-            // tv.forceNextScanline();
         }
     }
 
