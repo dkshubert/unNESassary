@@ -15,7 +15,7 @@ struct ApplicationConfig {
     // convenience during the project boostrapping process.
     std::string _lastPlayedRomPath { "/home/dkshubert/work/mario.nes" };
 
-    LogLevel _logLevel = LogLevel::debug;
+    LogLevel _logLevel { LogLevel::debug };
 
     TvConfig _tvConfig {};
 };

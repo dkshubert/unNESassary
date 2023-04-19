@@ -16,9 +16,9 @@ namespace unnes
 
 class Logger;
 
-static constexpr int kExitSuccess = 0;
-static constexpr int kExitFailure = -1;
-constexpr size_t kNumEmulatedDevices = 2;
+static constexpr int kExitSuccess { 0 };
+static constexpr int kExitFailure { -1 };
+constexpr size_t kNumEmulatedDevices { 2 };
 using DeviceList = std::array<IEmulatedDevice*, kNumEmulatedDevices>;
 
 /// @brief This is the main application class, used to house all objects that need to exists for the

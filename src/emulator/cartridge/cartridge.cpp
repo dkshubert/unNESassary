@@ -11,7 +11,7 @@
 namespace unnes
 {
 
-static constexpr size_t kRomPageSizeKB = 16;
+static constexpr size_t kRomPageSizeKB { 16 };
 
 struct Header {
     // Bytes 0-3 of the ROM should be the string 'N', 'E', 'S', '\x1A'.

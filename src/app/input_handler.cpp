@@ -32,12 +32,12 @@ void InputHandler::handleKeypress(int key, int scancode, int action, int mods)
                   fmt::format("Key Pressed ({}), scancode ({}), action ({}), mods ({})", key,
                               scancode, action, mods));
 
-    auto entry = _callbacks.find(key);
+    auto entry { _callbacks.find(key) };
     if (entry == _callbacks.end()) {
         _logger.write(LogLevel::debug, "No callback registered for key.");
     } else {
         _logger.write(LogLevel::debug, "Executing callback.");
-        auto& callback = entry->second;
+        auto& callback { entry->second };
         callback(static_cast<ButtonState>(action));
     }
 }
