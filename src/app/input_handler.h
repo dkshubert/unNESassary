@@ -16,15 +16,17 @@ namespace unnes
 class Application;
 class Logger;
 
+enum class Key {
+    ESCAPE = GLFW_KEY_ESCAPE
+    // TODO : the rest
+};
+
 enum class ButtonState {
     PRESSED = GLFW_PRESS,
     RELEASED = GLFW_RELEASE,
     REPEAT = GLFW_REPEAT
 };
 
-// TODO : make an enum class representing each key. For now use GLFW's "int" conception of a key
-// code.
-using KeyCode = int;
 using KeyboardCallback = std::function<void(ButtonState)>;
 
 /// @brief This is the main input handler for the application. Any object interested in handling
@@ -33,7 +35,7 @@ using KeyboardCallback = std::function<void(ButtonState)>;
 class InputHandler
 {
     Point<double> _cursorPosition { ._x = 0, ._y = 0 };
-    std::map<KeyCode, KeyboardCallback> _callbacks {};
+    std::map<Key, KeyboardCallback> _callbacks {};
 
     Application& _application;
     Logger& _logger;
@@ -66,14 +68,14 @@ public:
     /// @note Currently only a single callback can be registered to one key, but it might be worth
     /// incurring the added the complexity of having multiple callbacks for one keypress. We'll
     /// cross that road when it becomes necessary.
-    /// @param keyCode A code representing the key that was pressed.
+    /// @param key The key that was pressed.
     /// @param callback The callback that will be invoked when keyCode is pressed.
-    void registerCallback(KeyCode keyCode, KeyboardCallback&& callback);
+    void registerCallback(Key key, KeyboardCallback&& callback);
 
     /// @brief Clears a registered callback.
     ///
-    /// @param keyCode The unique keyCode whose callback will be cleared.
-    void clearCallback(KeyCode keyCode);
+    /// @param key The key whose callback will be cleared.
+    void clearCallback(Key key);
 
     /// @brief Updates the input handler (the mouse coordinates specifically).
     void update();

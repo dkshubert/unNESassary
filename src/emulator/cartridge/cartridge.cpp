@@ -86,7 +86,7 @@ bool Cartridge::load(const std::string_view romPath)
         return false;
     }
 
-    const Header header = read<Header>(rom);
+    const Header header { read<Header>(rom) };
     if (!headerIsValid(header)) {
         _logger.write(LogLevel::error, "Failed to load ROM Header");
         return false;
@@ -94,8 +94,8 @@ bool Cartridge::load(const std::string_view romPath)
 
     // TODO : finish parsing header flags...
 
-    static constexpr size_t kPrgRomBankSize = 0x4000;
-    const size_t prgRomSize = static_cast<size_t>(header._prgRomSize);
+    static constexpr size_t kPrgRomBankSize { 0x4000 };
+    const size_t prgRomSize { static_cast<size_t>(header._prgRomSize) };
     _prgRom.resize(kPrgRomBankSize * prgRomSize);
     if (!rom.read(reinterpret_cast<char*>(_prgRom.data()),
                   static_cast<long int>(_prgRom.capacity()))) {
@@ -103,8 +103,8 @@ bool Cartridge::load(const std::string_view romPath)
         return false;
     }
 
-    static constexpr size_t kChrRomBankSize = 0x2000;
-    const size_t chrRomSize = static_cast<size_t>(header._chrRomSize);
+    static constexpr size_t kChrRomBankSize { 0x2000 };
+    const size_t chrRomSize { static_cast<size_t>(header._chrRomSize) };
     if (chrRomSize != 0) {
         _chrRom.resize(kChrRomBankSize * chrRomSize);
         if (!rom.read(reinterpret_cast<char*>(_chrRom.data()),

@@ -32,7 +32,7 @@ void InputHandler::handleKeypress(int key, int scancode, int action, int mods)
                   fmt::format("Key Pressed ({}), scancode ({}), action ({}), mods ({})", key,
                               scancode, action, mods));
 
-    auto entry { _callbacks.find(key) };
+    auto entry { _callbacks.find(static_cast<Key>(key)) };
     if (entry == _callbacks.end()) {
         _logger.write(LogLevel::debug, "No callback registered for key.");
     } else {
@@ -44,16 +44,16 @@ void InputHandler::handleKeypress(int key, int scancode, int action, int mods)
 
 Point<double> InputHandler::getMouseCoordinates() { return _cursorPosition; }
 
-void InputHandler::registerCallback(KeyCode keyCode, KeyboardCallback&& callback)
+void InputHandler::registerCallback(Key key, KeyboardCallback&& callback)
 {
-    _logger.write(LogLevel::info, fmt::format("Registered handler for key: {}", keyCode));
-    _callbacks[keyCode] = std::move(callback);
+    _logger.write(LogLevel::info, fmt::format("Registered handler for key: {}", static_cast<int>(key)));
+    _callbacks[key] = std::move(callback);
 }
 
-void InputHandler::clearCallback(KeyCode keyCode)
+void InputHandler::clearCallback(Key key)
 {
-    _logger.write(LogLevel::info, fmt::format("Deregistered handler for key: {}", keyCode));
-    _callbacks.erase(keyCode);
+    _logger.write(LogLevel::info, fmt::format("Deregistered handler for key: {}", static_cast<int>(key)));
+    _callbacks.erase(key);
 }
 
 void InputHandler::update()

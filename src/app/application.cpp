@@ -17,7 +17,7 @@ Application::Application(ApplicationConfig config)
       _nes(_tv, *_logger)
 {
     _inputHandler.registerCallback(     //
-        GLFW_KEY_ESCAPE,                //
+        Key::ESCAPE,                    //
         [this](ButtonState) {           //
             _shutdownRequested = true;  //
         }                               //
