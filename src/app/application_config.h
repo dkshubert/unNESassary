@@ -13,7 +13,7 @@ namespace unnes
 struct ApplicationConfig {
     // TODO : update this when command line processing is added. This is set as the default out of
     // convenience during the project boostrapping process.
-    std::string _lastPlayedRomPath { "/home/dkshubert/work/dk.nes" };
+    std::string _lastPlayedRomPath { "/home/dkshubert/work/nestest.nes" };
 
     LogLevel _logLevel { LogLevel::debug };
 
