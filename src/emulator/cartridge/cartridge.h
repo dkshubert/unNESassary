@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -32,8 +33,8 @@ public:
     /// @returns True if the ROM loaded successfully, false otherwise.
     [[nodiscard]] bool load(const std::string_view romPath);
 
-    std::vector<std::uint8_t>& getPrgRom();
-    std::vector<std::uint8_t>& getChrRom();
+    [[nodiscard]] std::span<std::uint8_t> getPrgRom();
+    [[nodiscard]] std::span<std::uint8_t> getChrRom();
 
     /// @brief Does nothing.
     void furiouslyBlowOutDust();

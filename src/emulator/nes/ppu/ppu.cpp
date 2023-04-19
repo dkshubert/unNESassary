@@ -3,6 +3,7 @@
 #include <fmt/core.h>
 
 #include <cassert>
+#include <span>
 #include <thread>
 
 #include "cartridge.h"
@@ -17,11 +18,11 @@ namespace test
 
 /// TODO : use spans for these
 
-void renderTileScanline(std::uint8_t* chrom, TV& tv, Logger& logger);
+void renderTileScanline(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
 
-void renderTile(std::uint8_t* chrom, TV& tv, Logger& logger);
+void renderTile(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
 
-void renderTilesheet(std::uint8_t* chrom, TV& tv, Logger& logger);
+void renderTilesheet(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
 
 }  // namespace test
 
@@ -37,7 +38,7 @@ void PPU::connectCartridge(Cartridge* cartridge)
     _cartridge = cartridge;
 
     // TODO : delete this test code
-    test::renderTilesheet(_cartridge->getChrRom().data(), _tv, _logger);
+    test::renderTilesheet( _cartridge->getChrRom(), _tv, _logger);
 }
 
 bool PPU::handleClockTick(std::uint64_t tickNum)
@@ -49,10 +50,10 @@ bool PPU::handleClockTick(std::uint64_t tickNum)
     return true;
 }
 
-void test::renderTileScanline(std::uint8_t* chrom, TV& tv, Logger& logger)
+void test::renderTileScanline(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
 {
-    const std::uint8_t left = chrom[0];
-    const std::uint8_t right = chrom[8];
+    const std::uint8_t left { chrom[0] };
+    const std::uint8_t right { chrom[8] };
 
     for (size_t pixelIndex = 0; pixelIndex < 8; pixelIndex++) {
         const std::uint8_t mask = 0b10000000 >> pixelIndex;
@@ -70,21 +71,21 @@ void test::renderTileScanline(std::uint8_t* chrom, TV& tv, Logger& logger)
     }
 }
 
-void test::renderTile(std::uint8_t* chrom, TV& tv, Logger& logger)
+void test::renderTile(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
 {
-    for (size_t byteIndex = 0; byteIndex < 8; byteIndex++) {
-        renderTileScanline(chrom + byteIndex, tv, logger);
+    for (size_t byteIndex { 0 }; byteIndex < 8; byteIndex++) {
+        renderTileScanline(chrom.subspan(byteIndex), tv, logger);
     }
 
     tv.flushGraphics();
 }
 
-void test::renderTilesheet(std::uint8_t* chrom, TV& tv, Logger& logger)
+void test::renderTilesheet(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
 {
-    for (int tileRow = 0; tileRow < 30; tileRow++) {
-        for (int pixelRow = 0; pixelRow < 8; pixelRow++) {
-            for (size_t pixelColumn = 0; pixelColumn < 32; pixelColumn++) {
-                renderTileScanline(chrom + tileRow * 16 * 32 + pixelColumn * 16 + pixelRow, tv, logger);
+    for (size_t tileRow { 0 }; tileRow < 30; tileRow++) {
+        for (size_t pixelRow { 0 }; pixelRow < 8; pixelRow++) {
+            for (size_t pixelColumn { 0 }; pixelColumn < 32; pixelColumn++) {
+                renderTileScanline(chrom.subspan(tileRow * 16 * 32 + pixelColumn * 16 + pixelRow), tv, logger);
             }
             // tv.forceNextScanline();
         }

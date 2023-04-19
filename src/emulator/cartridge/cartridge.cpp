@@ -119,9 +119,9 @@ bool Cartridge::load(const std::string_view romPath)
     return true;
 }
 
-std::vector<std::uint8_t>& Cartridge::getPrgRom() { return _prgRom; }
+std::span<std::uint8_t> Cartridge::getPrgRom() { return _prgRom; }
 
-std::vector<std::uint8_t>& Cartridge::getChrRom() { return _chrRom; }
+std::span<std::uint8_t> Cartridge::getChrRom() { return _chrRom; }
 
 void Cartridge::furiouslyBlowOutDust()
 {
