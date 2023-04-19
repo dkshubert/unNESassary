@@ -53,7 +53,7 @@ void test::renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger
     const std::byte left { chrom[0] };
     const std::byte right { chrom[8] };
 
-    for (int pixelIndex = 7; pixelIndex >= 0; pixelIndex--) {
+    for (int pixelIndex { 7 }; pixelIndex >= 0; pixelIndex--) {
         // TODO: For sure this can be done more efficiently.
         static constexpr std::byte bit { 0b00000001 };
         const std::byte mask { bit << pixelIndex };
