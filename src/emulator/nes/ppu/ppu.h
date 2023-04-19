@@ -20,7 +20,7 @@ public:
     ~PPU() override = default;
 
     void connectCartridge(Cartridge* cartridge);
-    bool handleClockTick(std::uint64_t tickNum) override;
+    [[nodiscard]] bool handleClockTick(std::uint64_t tickNum) override;
 };
 
 }  // namespace unnes

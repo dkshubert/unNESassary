@@ -22,11 +22,11 @@ public:
     Window(Application& application);
     ~Window();
 
-    GLFWwindow* getGlfwWindow();
-    int getWidth() const;
-    int getHeight() const;
     void handleResize(int width, int height);
-    bool update();
+    [[nodiscard]] GLFWwindow* getGlfwWindow();
+    [[nodiscard]] int getWidth() const;
+    [[nodiscard]] int getHeight() const;
+    [[nodiscard]] bool update();
 };
 
 }  // namespace unnes

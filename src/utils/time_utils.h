@@ -5,6 +5,6 @@
 namespace unnes
 {
 
-double getTime();
+[[nodiscard]] double getTime();
 
 }  // namespace unnes

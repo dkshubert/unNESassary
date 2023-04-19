@@ -41,11 +41,11 @@ public:
     Application(ApplicationConfig config);
     ~Application();
 
-    ApplicationConfig& getConfig();
-    TV& getTV();
-    InputHandler& getInputHandler();
-    Window& getWindow();
-    Logger& getLogger();
+    [[nodiscard]] ApplicationConfig& getConfig();
+    [[nodiscard]] TV& getTV();
+    [[nodiscard]] InputHandler& getInputHandler();
+    [[nodiscard]] Window& getWindow();
+    [[nodiscard]] Logger& getLogger();
 
     /// @brief Runs the application. This method manages the main program loop.
     ///
