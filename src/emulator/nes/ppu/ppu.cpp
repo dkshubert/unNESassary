@@ -55,8 +55,8 @@ void test::renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger
 
     for (int pixelIndex = 7; pixelIndex >= 0; pixelIndex--) {
         // TODO: For sure this can be done more efficiently.
-        static constexpr std::byte oneBit { 0b00000001 };
-        const std::byte mask { oneBit << pixelIndex };
+        static constexpr std::byte bit { 0b00000001 };
+        const std::byte mask { bit << pixelIndex };
         const std::byte pixelLeft { (mask & left) >> pixelIndex };
         const std::byte pixelRight { (mask & right) >> pixelIndex };
         const std::byte pixel { (pixelLeft << 1) | pixelRight };
