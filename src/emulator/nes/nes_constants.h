@@ -20,8 +20,8 @@ namespace sprite
 
 namespace tilesheet
 {
-    constexpr std::uint8_t kWidth { screen::kWidthPixels / sprite::kLengthPixels };
-    constexpr std::uint8_t kHeight { screen::kHeightPixels / sprite::kLengthPixels };
+    constexpr std::byte kWidth { static_cast<std::byte>(screen::kWidthPixels / sprite::kLengthPixels) };
+    constexpr std::byte kHeight { static_cast<std::byte>(screen::kHeightPixels / sprite::kLengthPixels) };
 }
 
 }  // namespace unnes

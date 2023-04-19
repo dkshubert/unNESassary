@@ -18,10 +18,10 @@ struct Header {
     std::array<char, 4> _nesString {};
 
     // Byte 4 is the number of 16kB Program ROM (PRG-ROM) banks.
-    std::uint8_t _prgRomSize { 0 };
+    std::byte _prgRomSize { 0 };
 
     // Byte 5 is the size of 8kB Character ROM (CHR-ROM) banks.
-    std::uint8_t _chrRomSize { 0 };
+    std::byte _chrRomSize { 0 };
 
     // Byte 6 contains a number of flags. From https://www.nesdev.org/wiki/INES :
     // 76543210
@@ -34,12 +34,12 @@ struct Header {
     // ||||+---- 1: Ignore mirroring control or above mirroring bit; instead provide four-screen
     // VRAM
     // ++++----- Lower nybble of mapper number
-    std::uint8_t _flags6 { 0 };
-    std::uint8_t _flags7 { 0 };
-    std::uint8_t _flags8 { 0 };
-    std::uint8_t _flags9 { 0 };
-    std::uint8_t _flags10 { 0 };
-    std::array<std::uint8_t, 5> _padding;
+    std::byte _flags6 { 0 };
+    std::byte _flags7 { 0 };
+    std::byte _flags8 { 0 };
+    std::byte _flags9 { 0 };
+    std::byte _flags10 { 0 };
+    std::array<std::byte, 5> _padding;
 };
 
 Cartridge::Cartridge(Logger& logger)
@@ -57,7 +57,7 @@ bool Cartridge::headerIsValid(const Header& header)
         return false;
     }
 
-    if (header._prgRomSize == std::uint8_t { 0 }) {
+    if (header._prgRomSize == std::byte { 0 }) {
         _logger.write(LogLevel::error,
                       "The ROM is invalid. The header claims there's no program data.");
         return false;
@@ -65,7 +65,7 @@ bool Cartridge::headerIsValid(const Header& header)
     _logger.write(LogLevel::debug,
                   fmt::format("Program ROM size (num 16kB chunks): {}", header._prgRomSize));
 
-    if (header._chrRomSize == std::uint8_t { 0 }) {
+    if (header._chrRomSize == std::byte { 0 }) {
         _logger.write(LogLevel::info, "CH-RAM cart detected.");
     }
 
@@ -119,9 +119,9 @@ bool Cartridge::load(const std::string_view romPath)
     return true;
 }
 
-std::span<std::uint8_t> Cartridge::getPrgRom() { return _prgRom; }
+std::span<std::byte> Cartridge::getPrgRom() { return _prgRom; }
 
-std::span<std::uint8_t> Cartridge::getChrRom() { return _chrRom; }
+std::span<std::byte> Cartridge::getChrRom() { return _chrRom; }
 
 void Cartridge::furiouslyBlowOutDust()
 {

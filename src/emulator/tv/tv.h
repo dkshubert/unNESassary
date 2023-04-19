@@ -16,7 +16,7 @@ namespace unnes
 class Logger;
 class Window;
 
-using ScanlineBuffer = std::span<std::uint8_t, screen::kWidthPixels>;
+using ScanlineBuffer = std::span<std::byte, screen::kWidthPixels>;
 
 /// @brief The main television abstraction. TV is capable of rendering individual scanlines, or
 /// pixels.

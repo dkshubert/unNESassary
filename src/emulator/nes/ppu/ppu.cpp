@@ -16,13 +16,11 @@ namespace unnes
 namespace test
 {
 
-/// TODO : use spans for these
+// Add some helper functions to render pattern tables directly from character ROM.
 
-void renderTileScanline(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
-
-void renderTile(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
-
-void renderTilesheet(std::span<std::uint8_t> chrom, TV& tv, Logger& logger);
+void renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger);
+void renderTile(std::span<std::byte> chrom, TV& tv, Logger& logger);
+void renderTilesheet(std::span<std::byte> chrom, TV& tv, Logger& logger);
 
 }  // namespace test
 
@@ -50,19 +48,18 @@ bool PPU::handleClockTick(std::uint64_t tickNum)
     return true;
 }
 
-void test::renderTileScanline(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
+void test::renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger)
 {
-    const std::uint8_t left { chrom[0] };
-    const std::uint8_t right { chrom[8] };
+    const std::byte left { chrom[0] };
+    const std::byte right { chrom[8] };
 
-    for (size_t pixelIndex = 0; pixelIndex < 8; pixelIndex++) {
-        const std::uint8_t mask = 0b10000000 >> pixelIndex;
-
-        // clang-format off
-        const int pixel {
-            ( ( ( mask & left ) << 1 ) | ( ( mask & right ) ) ) >> (7 - pixelIndex)
-        };
-        // clang-format on
+    for (int pixelIndex = 7; pixelIndex >= 0; pixelIndex--) {
+        // TODO: For sure this can be done more efficiently.
+        static constexpr std::byte oneBit { 0b00000001 };
+        const std::byte mask { oneBit << pixelIndex };
+        const std::byte pixelLeft { (mask & left) >> pixelIndex };
+        const std::byte pixelRight { (mask & right) >> pixelIndex };
+        const std::byte pixel { (pixelLeft << 1) | pixelRight };
 
         logger.write(LogLevel::trace,
                         fmt::format("left: {}, right: {}, pixel: {}", left, right, pixel));
@@ -71,7 +68,7 @@ void test::renderTileScanline(std::span<std::uint8_t> chrom, TV& tv, Logger& log
     }
 }
 
-void test::renderTile(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
+void test::renderTile(std::span<std::byte> chrom, TV& tv, Logger& logger)
 {
     for (size_t byteIndex { 0 }; byteIndex < 8; byteIndex++) {
         renderTileScanline(chrom.subspan(byteIndex), tv, logger);
@@ -80,7 +77,7 @@ void test::renderTile(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
     tv.flushGraphics();
 }
 
-void test::renderTilesheet(std::span<std::uint8_t> chrom, TV& tv, Logger& logger)
+void test::renderTilesheet(std::span<std::byte> chrom, TV& tv, Logger& logger)
 {
     for (size_t tileRow { 0 }; tileRow < 30; tileRow++) {
         for (size_t pixelRow { 0 }; pixelRow < 8; pixelRow++) {

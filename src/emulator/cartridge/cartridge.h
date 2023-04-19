@@ -19,8 +19,8 @@ class Cartridge
     Logger& _logger;
     std::string _romPath;
     bool _mirroring { false };
-    std::vector<std::uint8_t> _prgRom;
-    std::vector<std::uint8_t> _chrRom;
+    std::vector<std::byte> _prgRom;
+    std::vector<std::byte> _chrRom;
 
     bool headerIsValid(const Header& header);
 
@@ -33,8 +33,8 @@ public:
     /// @returns True if the ROM loaded successfully, false otherwise.
     [[nodiscard]] bool load(const std::string_view romPath);
 
-    [[nodiscard]] std::span<std::uint8_t> getPrgRom();
-    [[nodiscard]] std::span<std::uint8_t> getChrRom();
+    [[nodiscard]] std::span<std::byte> getPrgRom();
+    [[nodiscard]] std::span<std::byte> getChrRom();
 
     /// @brief Does nothing.
     void furiouslyBlowOutDust();
