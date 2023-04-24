@@ -44,6 +44,7 @@ int Application::run()
         return kExitFailure;
     }
 
+    int exitStatus = kExitFailure;
     while (!_shutdownRequested) {
         const double time { unnes::getTime() };
 
@@ -52,18 +53,20 @@ int Application::run()
                 _logger->write(LogLevel::error,
                                "Emulated device failed to update. Exiting main loop.");
                 _shutdownRequested = true;
+                exitStatus = kExitFailure;
             }
         }
 
         _inputHandler.update();
 
         if (!_window.update()) {
-            _logger->write(LogLevel::error, "The window has closed.");
+            _logger->write(LogLevel::info, "The window has closed.");
             _shutdownRequested = true;
+            exitStatus = kExitSuccess;
         }
     }
 
-    return kExitSuccess;
+    return exitStatus;
 }
 
 }  // namespace unnes
