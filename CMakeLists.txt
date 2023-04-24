@@ -25,6 +25,7 @@ target_include_directories(
     src/app
     src/emulator
     src/emulator/cartridge
+    src/emulator/controller
     src/emulator/nes
     src/emulator/nes/apu
     src/emulator/nes/clock
