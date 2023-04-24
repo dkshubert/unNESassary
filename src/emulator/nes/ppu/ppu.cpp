@@ -18,9 +18,9 @@ namespace test
 
 // Add some helper functions to render pattern tables directly from character ROM.
 
-void renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger);
-void renderTile(std::span<std::byte> chrom, TV& tv, Logger& logger);
-void renderTilesheet(std::span<std::byte> chrom, TV& tv, Logger& logger);
+void renderTileScanline(std::span<std::byte> chrom, TV& tv);
+void renderTile(std::span<std::byte> chrom, TV& tv);
+void renderTilesheet(std::span<std::byte> chrom, TV& tv);
 
 }  // namespace test
 
@@ -34,21 +34,21 @@ void PPU::connectCartridge(Cartridge* cartridge)
 {
     assert(cartridge);
     _cartridge = cartridge;
-
-    // TODO : delete this test code
-    test::renderTilesheet( _cartridge->getChrRom(), _tv, _logger);
 }
 
 bool PPU::handleClockTick(std::uint64_t tickNum)
 {
     _logger.write(LogLevel::trace, fmt::format("handling tickNum: {}", tickNum));
 
+    // TODO : delete this test code
+    test::renderTilesheet(_cartridge->getChrRom(), _tv);
+
     // TODO : really handle a clock tick.
 
     return true;
 }
 
-void test::renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger)
+void test::renderTileScanline(std::span<std::byte> chrom, TV& tv)
 {
     const std::byte left { chrom[0] };
     const std::byte right { chrom[8] };
@@ -60,34 +60,31 @@ void test::renderTileScanline(std::span<std::byte> chrom, TV& tv, Logger& logger
         const std::byte pixelLeft { (mask & left) >> pixelIndex };
         const std::byte pixelRight { (mask & right) >> pixelIndex };
         const std::byte pixel { (pixelLeft << 1) | pixelRight };
-
-        logger.write(LogLevel::trace,
-                        fmt::format("left: {}, right: {}, pixel: {}", left, right, pixel));
         const float f { static_cast<int>(pixel) / 3.0f };
+
         tv.incrementScanline({ ._r = f, ._g = f, ._b = f });
     }
 }
 
-void test::renderTile(std::span<std::byte> chrom, TV& tv, Logger& logger)
+void test::renderTile(std::span<std::byte> chrom, TV& tv)
 {
     for (size_t byteIndex { 0 }; byteIndex < 8; byteIndex++) {
-        renderTileScanline(chrom.subspan(byteIndex), tv, logger);
+        renderTileScanline(chrom.subspan(byteIndex), tv);
     }
 
     tv.flushGraphics();
 }
 
-void test::renderTilesheet(std::span<std::byte> chrom, TV& tv, Logger& logger)
+void test::renderTilesheet(std::span<std::byte> chrom, TV& tv)
 {
     for (size_t tileRow { 0 }; tileRow < 30; tileRow++) {
         for (size_t pixelRow { 0 }; pixelRow < 8; pixelRow++) {
             for (size_t pixelColumn { 0 }; pixelColumn < 32; pixelColumn++) {
-                renderTileScanline(chrom.subspan(tileRow * 16 * 32 + pixelColumn * 16 + pixelRow), tv, logger);
+                renderTileScanline(chrom.subspan(tileRow * 16 * 32 + pixelColumn * 16 + pixelRow),
+                                   tv);
             }
         }
     }
-
-    tv.flushGraphics();
 }
 
 }  // namespace unnes

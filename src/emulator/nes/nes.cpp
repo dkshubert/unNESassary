@@ -33,6 +33,8 @@ bool NES::insertCart(const std::string_view romPath)
         return false;
     }
 
+    // TODO : create an interface for this
+    _cpu.connectCartridge(_cartridge.get());
     _ppu.connectCartridge(_cartridge.get());
 
     return true;

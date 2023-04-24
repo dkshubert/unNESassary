@@ -46,13 +46,15 @@ Point<double> InputHandler::getMouseCoordinates() { return _cursorPosition; }
 
 void InputHandler::registerCallback(Key key, KeyboardCallback&& callback)
 {
-    _logger.write(LogLevel::info, fmt::format("Registered handler for key: {}", static_cast<int>(key)));
+    _logger.write(LogLevel::info,
+                  fmt::format("Registered handler for key: {}", static_cast<int>(key)));
     _callbacks[key] = std::move(callback);
 }
 
 void InputHandler::clearCallback(Key key)
 {
-    _logger.write(LogLevel::info, fmt::format("Deregistered handler for key: {}", static_cast<int>(key)));
+    _logger.write(LogLevel::info,
+                  fmt::format("Deregistered handler for key: {}", static_cast<int>(key)));
     _callbacks.erase(key);
 }
 

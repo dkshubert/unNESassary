@@ -18,9 +18,9 @@ TV::TV(Window& window, Logger& logger)
 {
 }
 
-constexpr float getPixelWidth() { return 2.0f / screen::kWidthPixels; }
+[[nodiscard]] constexpr float getPixelWidth() { return 2.0f / screen::kWidthPixels; }
 
-constexpr float getPixelHeight() { return 2.0f / screen::kHeightPixels; }
+[[nodiscard]] constexpr float getPixelHeight() { return 2.0f / screen::kHeightPixels; }
 
 void TV::incrementScanline(Color<float> color)
 {
@@ -55,18 +55,6 @@ void TV::flushGraphics()
     _currentScanlineColumn = 0;
 
     glfwSwapBuffers(_window.getGlfwWindow());
-
-    // glClear(GL_COLOR_BUFFER_BIT);
-
-    // Set the viewport to the entire window
-    glViewport(0, 0, _window.getWidth(), _window.getHeight());
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
 }
 
 void TV::renderPixel(Point<float> coords, Color<float> color)
